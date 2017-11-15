@@ -3,7 +3,7 @@ package org.worms.people;
 import java.util.ArrayList;
 import org.worms.hardware.Department;
 
-public class Employee
+public abstract class Employee
 {
 	private String name;
 	private double salary;

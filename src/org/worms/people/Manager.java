@@ -108,7 +108,7 @@ public class Manager extends Employee {
 	
 	public void restockItem(int amount) {
 		
-		this.product.setAmount(amount);
+		this.product.increaseInventory(amount);
 		
 	}
 }

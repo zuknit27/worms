@@ -8,7 +8,7 @@ public class SalesEmployee  extends Employee{
 	private String position;
 	Manager manager;
 	private ArrayList<Integer> schedule = new ArrayList<Integer>();
-	//private ArrayList<String> toDoList = new ArrayList<String>();
+	private ArrayList<Task> taskList = new ArrayList<Task>();
 	
 	public SalesEmployee()
 	{
@@ -37,14 +37,18 @@ public class SalesEmployee  extends Employee{
 	{
 		this.schedule.add(schedule);
 	}
-//	public void addTask(String taskItem)
-//	{
-//		this.toDoList.add(taskItem);
-//	}
-//	public void removeTask(String taskItem)
-//	{
-//		this.toDoList.remove(taskItem);
-//	}
+	public void addTask(Task taskItem)
+	{
+		this.taskList.add(taskItem);
+	}
+	public void removeTask(Task taskItem)
+	{
+		this.taskList.remove(taskItem);
+	}
+	public ArrayList<Task> getTaskList()
+	{
+		return taskList;
+	}
 	
 
 }

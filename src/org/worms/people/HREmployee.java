@@ -23,7 +23,7 @@ public class HREmployee  extends Employee{
   }
   public void scheduleAppointment(Employee e){
     int t = 0;    
-    e.addToSchedule(t); //Unsure what we want to add here, so just added a 0
+    e.addToAppointmentSchedule(t); //Unsure what we want to add here, so just added a 0
   }
   
 

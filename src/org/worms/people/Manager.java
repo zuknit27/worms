@@ -36,8 +36,8 @@ public class Manager extends Employee {
 		for (i = 0; i < this.employeeList.size(); i++) {
 			AllSchedules += "Name: " + this.employeeList.get(i).getName().toString() 
 					+ "\n\t";
-			for (j=0; j < this.employeeList.get(i).getSchedule().size(); j++) {
-				AllSchedules += this.employeeList.get(i).getSchedule().get(j).toString()
+			for (j=0; j < this.employeeList.get(i).getWorkSchedule().size(); j++) {
+				AllSchedules += this.employeeList.get(i).getWorkSchedule().get(j).toString()
 						+ "\n\t";				
 			}
 			
@@ -53,9 +53,9 @@ public class Manager extends Employee {
 			return true;
 		}
 		else {
-		for (i = 0; i < someEmployee.getSchedule().size(); i++) {//iterates through employee schedule
+		for (i = 0; i < someEmployee.getWorkSchedule().size(); i++) {//iterates through employee schedule
 		
-			if(someEmployee.getSchedule().get(i) < punchTime) {//checks schedule against punchin Time
+			if(someEmployee.getWorkSchedule().get(i) < punchTime) {//checks schedule against punchin Time
 				
 				return true;// if punch Time is greater than desired schedule true "employee is late"
 			}
@@ -67,24 +67,29 @@ public class Manager extends Employee {
 
 
 	public String checkOperationsCompleted() {
-
+		
 		String operations = "";
 		
 		for(i = 0; i < this.employeeList.size(); i++) {
 			operations += "Name: " + this.employeeList.get(i).getName().toString() + "\n\t";	
-				for(j = 0; j < this.employeeList.getName().get(i).getOperations().size(); j++) {
-					operations += "task: " 
-							+ this.employeeList.getName().get(i).getOperations().getOperationName().toString()
+				for(j = 0; j < this.employeeList.get(i).getToDoList().size(); j++)
+				{
+					operations += "task: "
+							+ this.employeeList.get(i).getToDoList().get(j)
 							+ "\t";
-					if (this.employeeList.getName().get(i).getOperations().getFinished() == true) {
+				//for(j = 0; j < this.employeeList.getName().get(i).getOperations().size(); j++) {
+					//operations += "task: " 
+							//+ this.employeeList.getName().get(i).getOperations().getOperationName().toString()
+							//+ "\t";
+					//if (this.employeeList.getName().get(i).getOperations().getFinished() == true) {
 						
-						operations += "Finished";
+						//operations += "Finished";
 						
-					}
-					else {
-						operations += "Not Complete";
-					}
-					operations += "\n";
+					//}
+					//else {
+						//operations += "Not Complete";
+					//}
+					//operations += "\n";
 				}
 		}
 		
@@ -97,8 +102,8 @@ public class Manager extends Employee {
 		String AllStocks = "";
 		
 		for (i = 0; i < products.size(); i ++) {
-			AllStocks += "Product " + products.getName() + "\n\t";
-			AllStocks += "Amount: " + products.getName().get(i).getInventory().toString() + "\n";
+			//AllStocks += "Product " + products.getName() + "\n\t";
+			//AllStocks += "Amount: " + products.getName().get(i).getInventory().toString() + "\n";
 
 		}
 		

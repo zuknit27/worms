@@ -31,7 +31,7 @@ public class WormsGUI extends JFrame
 	{
 		super("     " + windowTitle);
 		setSize(500, 500);
-		wormsText = new JTextArea("     Welcom to I've Got Worms.");
+		wormsText = new JTextArea("     Welcome to I've Got Worms.");
 		add(wormsText);
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		buildGUI();

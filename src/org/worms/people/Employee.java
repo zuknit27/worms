@@ -3,11 +3,13 @@ package org.worms.people;
 import java.util.ArrayList;
 import org.worms.hardware.Department;
 
-public abstract class Employee
+public class Employee
 {
 	private String name;
 	private double salary;
-	private ArrayList<Integer> schedule = new ArrayList<Integer>();
+	private ArrayList<Integer> workSchedule = new ArrayList<Integer>();
+	private ArrayList<Integer> appointmentSchedule = new ArrayList<Integer>();
+	private ArrayList<String> toDoList = new ArrayList<String>();
 	private Department department;
 	
 	public Employee()
@@ -31,13 +33,21 @@ public abstract class Employee
 	{
 		this.salary = salary;
 	}
-	public void addToSchedule(int s)
+	public void addToWorkSchedule(int schedule)
 	{
-		schedule.add(s);
+		workSchedule.add(schedule);
 	}
-	public ArrayList<Integer> getSchedule()
+	public ArrayList<Integer> getWorkSchedule()
 	{
-		return schedule;
+		return workSchedule;
+	}
+	public void addToAppointmentSchedule(int schedule)
+	{
+		appointmentSchedule.add(schedule);
+	}
+	public ArrayList<Integer> getAppointmentSchedule()
+	{
+		return appointmentSchedule;
 	}
 	public void setDepartment(Department department)
 	{
@@ -46,5 +56,17 @@ public abstract class Employee
 	public Department getDepartment()
 	{
 		return department;
+	}
+	public void addTask(String taskItem)
+	{
+		this.toDoList.add(taskItem);
+	}
+	public void removeTask(String taskItem)
+	{
+		this.toDoList.remove(taskItem);
+	}
+	public ArrayList<String> getToDoList()
+	{
+		return toDoList;
 	}
 }

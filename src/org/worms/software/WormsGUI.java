@@ -21,9 +21,14 @@ public class WormsGUI extends JFrame
 	private JMenuItem HRPrintEmployeeList;
 	
 	private JMenuItem EmployeePrintSchedule;
+	private JMenuItem EmployeeViewTasks;
 	
 	private JMenuItem ManagerPrintSchedule;
 	private JMenuItem ManagerPrintEmployeeList;
+	private JMenuItem ManagerAssignTask;
+	private JMenuItem ManagerRemoveTask;
+	
+	
 	
 	private JTextArea wormsText;
 	
@@ -57,9 +62,12 @@ public class WormsGUI extends JFrame
 		HRPrintEmployeeList = new JMenuItem("Print Employee's");
 		
 		EmployeePrintSchedule = new JMenuItem("Print Schedule");
+		EmployeeViewTasks = new JMenuItem("View Tasks");
 		
 		ManagerPrintSchedule = new JMenuItem("Print Schedule");
 		ManagerPrintEmployeeList = new JMenuItem("Print Employee List");
+		ManagerAssignTask = new JMenuItem("Assign Task");
+		ManagerRemoveTask = new JMenuItem("Remove Task");
 		
 		
 		//action listeners
@@ -71,9 +79,12 @@ public class WormsGUI extends JFrame
 		HRPrintEmployeeList.addActionListener(new MenuListener());
 		
 		EmployeePrintSchedule.addActionListener(new MenuListener());
+		EmployeeViewTasks.addActionListener(new MenuListener());
 		
 		ManagerPrintSchedule.addActionListener(new MenuListener());
 		ManagerPrintEmployeeList.addActionListener(new MenuListener());
+		ManagerAssignTask.addActionListener(new MenuListener());
+		ManagerRemoveTask.addActionListener(new MenuListener());
 		
 		fileMenu.add(fileExit);
 		
@@ -83,9 +94,12 @@ public class WormsGUI extends JFrame
 		HRMenu.add(HRPrintEmployeeList);
 		
 		EmployeeMenu.add(EmployeePrintSchedule);
+		EmployeeMenu.add(EmployeeViewTasks);
 		
 		ManagerMenu.add(ManagerPrintSchedule);
 		ManagerMenu.add(ManagerPrintEmployeeList);
+		ManagerMenu.add(ManagerAssignTask);
+		ManagerMenu.add(ManagerRemoveTask);
 		
 		menuBar.add(fileMenu);
 		menuBar.add(HRMenu);
@@ -105,12 +119,45 @@ public class WormsGUI extends JFrame
 			{
 				handleFileExit();
 			}
+			else if(source.equals(HRFire)) 
+			{
+				handleHRFire();
+			}
+			else if(source.equals(HRHire))
+			{
+				handleHRHire();
+			}
+			else if(source.equals(HRPayRate))
+			{
+				handleHRPayRate();
+			}
+			else if(source.equals(HRPrintEmployeeList))
+			{
+				handleHRPrintEmployeeList();
+			}		
 		}
 	}
 	private void handleFileExit()
 	{
 		System.exit(0);
 	}
+	private void handleHRFire()
+	{
+		
+	}
+	private void handleHRHire()
+	{
+		
+	}
+	private void handleHRPayRate()
+	{
+		
+	}
+	private void handleHRPrintEmployeeList()
+	{
+		
+	}
+	
 	
 }
 

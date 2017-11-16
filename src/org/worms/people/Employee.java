@@ -1,7 +1,9 @@
 package org.worms.people;
 
+
 import java.util.ArrayList;
 import org.worms.hardware.Department;
+import org.worms.hardware.Task;
 
 public class Employee
 {
@@ -9,7 +11,7 @@ public class Employee
 	private double salary;
 	private ArrayList<Integer> workSchedule = new ArrayList<Integer>();
 	private ArrayList<Integer> appointmentSchedule = new ArrayList<Integer>();
-	private ArrayList<String> toDoList = new ArrayList<String>();
+	private ArrayList<Task> taskList = new ArrayList<Task>();
 	private Department department;
 	
 	public Employee()
@@ -57,16 +59,17 @@ public class Employee
 	{
 		return department;
 	}
-	public void addTask(String taskItem)
+	public void addTask(Task taskItem)
 	{
-		this.toDoList.add(taskItem);
+		this.taskList.add(taskItem);
 	}
-	public void removeTask(String taskItem)
+	public void removeTask(Task taskItem)
 	{
-		this.toDoList.remove(taskItem);
+		this.taskList.remove(taskItem);
 	}
-	public ArrayList<String> getToDoList()
+	public ArrayList<Task> getTaskList()
 	{
-		return toDoList;
+		return taskList;
 	}
+	
 }

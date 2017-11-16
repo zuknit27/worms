@@ -72,10 +72,10 @@ public class Manager extends Employee {
 		
 		for(i = 0; i < this.employeeList.size(); i++) {
 			operations += "Name: " + this.employeeList.get(i).getName().toString() + "\n\t";	
-				for(j = 0; j < this.employeeList.get(i).getToDoList().size(); j++)
+				for(j = 0; j < this.employeeList.get(i).getTaskList().size(); j++)
 				{
 					operations += "task: "
-							+ this.employeeList.get(i).getToDoList().get(j)
+							+ this.employeeList.get(i).getTaskList().get(j)
 							+ "\t";
 				//for(j = 0; j < this.employeeList.getName().get(i).getOperations().size(); j++) {
 					//operations += "task: " 

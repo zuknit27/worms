@@ -148,7 +148,7 @@ public class Driver
 		}
 		
 		
-		//WormsGUI newGUI;
-		//newGUI = new WormsGUI("I've Got Worms");
+		WormsGUI newGUI;
+		newGUI = new WormsGUI("I've Got Worms");
 	}
 }

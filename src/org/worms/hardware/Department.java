@@ -26,5 +26,23 @@ public class Department {
 		this.name = someName;
 	}
 	
+	public ArrayList<Product> getProductList() {
+		return this.product;
+	}
+	
+	public void setProductList(Product someP) {
+		this.product.add(someP);
+	}
+	
+	public ArrayList<Employee> getEmployeeList() {
+		return this.employeeList;
+	}
+	
+	public void setEmployeeList(Employee someE) {
+		this.employeeList.add(someE);
+	}
+	
+	
+	
 	
 }

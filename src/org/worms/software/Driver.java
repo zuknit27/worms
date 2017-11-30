@@ -25,7 +25,7 @@ public class Driver
 		Task t3 = new Task();
 		
 		wormStore.setName("I've Got Worms");
-		wormStore.addToDepartmentList(d1);
+		wormStore.setDepartment(d1);
 		
 		//Set names
 		d1.setName("Worm Sales");

@@ -3,11 +3,15 @@ package org.worms.people;
 import java.util.ArrayList;
 import org.worms.people.Employee;
 
+
 public class HREmployee  extends Employee{
   private ArrayList<Employee> employeeList;
   
+  
   public HREmployee() {
     employeeList = new ArrayList<Employee>();
+    
+    
   }
   
   public void hire(Employee e){

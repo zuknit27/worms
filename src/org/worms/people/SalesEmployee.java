@@ -7,7 +7,7 @@ public class SalesEmployee  extends Employee{
 	
 	private String position;
 	Manager manager;
-	private ArrayList<Integer> schedule = new ArrayList<Integer>();
+	//private ArrayList<Integer> schedule = new ArrayList<Integer>();
 	
 	public SalesEmployee()
 	{
@@ -32,11 +32,11 @@ public class SalesEmployee  extends Employee{
 	{
 		return manager;
 	}
-	public void addToSchedule(int schedule)
-	{
-		this.schedule.add(schedule);
-	}
-	
+//	public void addToSchedule(int schedule)
+//	{
+//		this.schedule.add(schedule);
+//	}
+//	
 	
 
 }

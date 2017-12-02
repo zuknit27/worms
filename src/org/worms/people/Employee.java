@@ -2,8 +2,8 @@ package org.worms.people;
 
 
 import java.util.ArrayList;
-import org.worms.hardware.Department;
-import org.worms.hardware.Task;
+
+import org.worms.hardware.*;
 
 public class Employee
 {
@@ -14,6 +14,11 @@ public class Employee
 	private ArrayList<Task> taskList;
 	private Department department;
 	
+	public void setRaise(float somePercent) {
+		
+		this.setSalary(((somePercent/100) * this.getSalary()) + this.getSalary());
+		
+	}
 	public Employee()
 	{
 		this.name = "unknown";
@@ -56,7 +61,6 @@ public class Employee
 	{
 		department.setEmployeeList(this);
 		this.department = department;
-		
 	}
 	public Department getDepartment()
 	{
@@ -70,9 +74,15 @@ public class Employee
 	{
 		taskList.remove(taskItem);
 	}
+
 	public ArrayList<Task> getTaskList()
 	{
 		return taskList;
 	}
 	
+	public boolean getFinished() {
+			
+		
+		return false;
+	}
 }

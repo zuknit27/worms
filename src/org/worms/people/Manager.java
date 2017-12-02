@@ -2,11 +2,12 @@ package org.worms.people;
 
 import java.util.ArrayList;
 
-import org.worms.hardware.Product;
+import org.worms.hardware.*;
 public class Manager extends Employee {
 	
 	private ArrayList<Employee> employeeList;
-	private Product product;
+	private ArrayList<Product> product;
+	private Department department;
 	private int i;
 	private int j;
 	
@@ -14,6 +15,7 @@ public class Manager extends Employee {
 		
 		i = 0;
 		j = 0;
+		department = new Department();
 		employeeList = new ArrayList<Employee>();
 		
 	}
@@ -27,6 +29,7 @@ public class Manager extends Employee {
 	public void setEmployeeList(Employee someEmployee) {
 		
 		this.employeeList.add(someEmployee);
+	
 		
 	}
 		public String checkTeamSchedule() {
@@ -71,49 +74,60 @@ public class Manager extends Employee {
 		String operations = "";
 		
 		for(i = 0; i < this.employeeList.size(); i++) {
+			//System.out.println(this.employeeList.get(i).getName());
 			operations += "Name: " + this.employeeList.get(i).getName().toString() + "\n\t";	
+
+	//System.out.println(this.employeeList.get(i).getToDoList().size());
 				for(j = 0; j < this.employeeList.get(i).getTaskList().size(); j++)
 				{
 					operations += "task: "
 							+ this.employeeList.get(i).getTaskList().get(j)
 							+ "\t";
-				//for(j = 0; j < this.employeeList.getName().get(i).getOperations().size(); j++) {
-					//operations += "task: " 
-							//+ this.employeeList.getName().get(i).getOperations().getOperationName().toString()
-							//+ "\t";
-					//if (this.employeeList.getName().get(i).getOperations().getFinished() == true) {
+					if (this.employeeList.get(i).getTaskList().get(j).getCompleted() == true) {
 						
-						//operations += "Finished";
+						operations += "Finished";
 						
-					//}
-					//else {
-						//operations += "Not Complete";
-					//}
-					//operations += "\n";
+					}
+					else {
+						operations += "Not Complete";
+					}
+					operations += "\n";
 				}
 		}
-		
 		
 		return operations;
 	}
 	
-	public String checkStocks(ArrayList<Product> products) {
+	public String checkStocks() {//ArrayList<Product> products) {
 		
 		String AllStocks = "";
 		
-		for (i = 0; i < products.size(); i ++) {
-			//AllStocks += "Product " + products.getName() + "\n\t";
-			//AllStocks += "Amount: " + products.getName().get(i).getInventory().toString() + "\n";
-
+		for (i = 0; i < this.product.size(); i ++) {
+			AllStocks += "Product " + this.product.get(i).getName().toString() + "\n\t";
+			AllStocks += "Amount: " + Integer.toString(this.product.get(i).getInventory()) + "\n";
 		}
 		
 		return AllStocks;
 		
 	}
 	
-	public void restockItem(int amount) {
+	public void restockItem(int amount, Product someItem) {
 		
-		this.product.increaseInventory(amount);
+		for (i = 0; i < this.product.size(); i++) {
+			if(someItem.getName() == this.product.get(i).getName()) {
+				this.product.get(i).increaseInventory(amount);
+			}
+		}
+	}
+	
+	public void setDepartment(Department someD) {
 		
+		this.department = someD;
+		someD.setEmployeeList(this);
+		
+	}
+	
+	public Department getDepartment() {
+		return this.department;
 	}
 }

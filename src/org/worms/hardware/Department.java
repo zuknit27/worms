@@ -1,6 +1,6 @@
 package org.worms.hardware;
-
 import java.util.ArrayList;
+
 import org.worms.people.Employee;
 
 public class Department {
@@ -14,14 +14,22 @@ public class Department {
 		name = "unknown";
 		product = new ArrayList<Product>();
 		employeeList = new ArrayList<Employee>();
-		
-		
+				
 	}
-
+	
 	public String getName() {
 		return this.name;
 	}
 	
+	public void removeDept(Employee someE) {
+		//System.out.println("In remove department " + someE.getName());
+		for(int i = 0; i < this.employeeList.size();i++) {
+			if (this.employeeList.get(i) == someE) {
+				this.employeeList.remove(i);
+			}
+		}
+		
+	}
 	public void setName(String someName) {
 		this.name = someName;
 	}
@@ -40,9 +48,7 @@ public class Department {
 	
 	public void setEmployeeList(Employee someE) {
 		this.employeeList.add(someE);
-	}
-	
-	
-	
+	}	
 	
 }
+

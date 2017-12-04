@@ -26,7 +26,7 @@ public class SalesEmployee  extends Employee{
     public void setDepartment(Department someD) {
         
         this.department = someD;
-        someD.setEmployeeList(this);
+        someD.setSalesEmployeeList(this);
         
     }
     

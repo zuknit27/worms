@@ -175,8 +175,9 @@ public class Manager extends Employee {
     
     public void setDepartment(Department someD) {
         
+    	
         this.department = someD;
-        someD.setEmployeeList(this);
+        someD.setManagerList(this);
         
     }
     

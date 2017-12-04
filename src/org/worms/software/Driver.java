@@ -57,7 +57,7 @@ public class Driver
         mang1.setDepartment(dept1);
         
         //add manager to manager list of the store
-        store.setManagerList(mang1);
+       // store.setManagerList(mang1);
         
         
         hr1.setDepartment(dept1);
@@ -67,25 +67,25 @@ public class Driver
         
         
         //add sales employee to sales employee list of the store
-        store.setSalesEmployee(sales1);
-        store.setSalesEmployee(sales2);
-        store.setSalesEmployee(sales3);
+//        store.setSalesEmployee(sales1);
+//        store.setSalesEmployee(sales2);
+//        store.setSalesEmployee(sales3);
         
         
-        sales1.setDepartment(dept1);
-        sales2.setDepartment(dept1);
-        sales3.setDepartment(dept1);
+        //sales1.setDepartment(dept1);
+        //sales2.setDepartment(dept1);
+        //sales3.setDepartment(dept1);
         
-        System.out.println(dept1.getEmployeeList().get(0).getName());
-        System.out.println(dept1.getEmployeeList().get(1).getName());
-        System.out.println(dept1.getEmployeeList().get(2).getName());
-        System.out.println(dept1.getEmployeeList().get(3).getName());
-        System.out.println(dept1.getEmployeeList().get(4).getName());
+        //System.out.println(dept1.getSalesEmployeeList().get(0).getName());
+        //System.out.println(dept1.getSalesEmployeeList().get(1).getName());
+        //System.out.println(dept1.getSalesEmployeeList().get(2).getName());
+        //System.out.println(dept1.getSalesEmployeeList().get(3).getName());
+        //System.out.println(dept1.getSalesEmployeeList().get(4).getName());
         
         //Add employees to employee lists
-        hr1.hire(sales1);
-        hr1.hire(sales2);
-        hr1.hire(sales3);
+        hr1.hire(sales1, dept1, 100);
+        hr1.hire(sales2, dept1, 100);
+        hr1.hire(sales3, dept1, 100);
         
         mang1.setEmployeeList(sales1);
         mang1.setEmployeeList(sales2);
@@ -161,8 +161,8 @@ public class Driver
         System.out.println("Test 1:");
         System.out.println("This department is named " + dept1.getName());
         System.out.println("Employees in this department: ");
-        for(int i = 0; i < dept1.getEmployeeList().size(); i++) {
-            System.out.println("\t" + dept1.getEmployeeList().get(i).getName());
+        for(int i = 0; i < dept1.getSalesEmployeeList().size(); i++) {
+            System.out.println("\t" + dept1.getSalesEmployeeList().get(i).getName());
         }
         
         //Test 2: Manager Team Schedule check
@@ -211,11 +211,11 @@ public class Driver
         System.out.println("\n\nTest 7:");
         hr1.fire(sales3, dept1);
         hr1.fire(mang1, dept1);
-        hr1.hire(sales3);
+        hr1.hire(sales3, dept1, 100);
         sales3.setDepartment(dept1);
         System.out.println(mang1.getName() + " has been fired. Employees still in department: ");
-        for(int i = 0; i < dept1.getEmployeeList().size(); i++) {
-            System.out.println(dept1.getEmployeeList().get(i).getName() + "\n\t");
+        for(int i = 0; i < dept1.getSalesEmployeeList().size(); i++) {
+            System.out.println(dept1.getSalesEmployeeList().get(i).getName() + "\n\t");
         }
         
         //Test 8: check inventory

@@ -51,6 +51,7 @@ public class WormsGUI extends JFrame
 	private JTextField hrHirePayText;
 	private JTextField hrHireNameText;
 	private JTextField hrHireHRText;
+	private JTextField hrHireDeptText;
 	private JTextField hrNameText;
 	private JTextField hrEmployeeNameText;
 	private JTextField hrAdjustSalaryText;
@@ -262,6 +263,8 @@ public class WormsGUI extends JFrame
 		hrHireNameText = new JTextField(15);
 		JLabel messageLabel3 = new JLabel("Starting pay Rate:");
 		hrHirePayText = new JTextField(5);
+		JLabel messageLabel4 = new JLabel("Department:");
+		hrHireDeptText = new JTextField(15);
 		
 		
 		JButton hrHireOKButton = new JButton("OK");
@@ -276,6 +279,8 @@ public class WormsGUI extends JFrame
 		panel.add(hrHireNameText);
 		panel.add(messageLabel3);
 		panel.add(hrHirePayText);
+		panel.add(messageLabel4);
+		panel.add(hrHireDeptText);
 		panel.add(hrHireOKButton);
 		panel.add(hrHireCancelButton);
 		
@@ -426,26 +431,32 @@ public class WormsGUI extends JFrame
 			
 			boolean isEmployee = false;
 			int index = 0;
+			int departmentIndex = 0;
 			
 			str = printScheduleManagerNameText.getText();
-			for(int i = 0; i < store.getManagerList().size(); i++)
+			for(int i = 0; i < store.getDepartmentList().size(); i++)
 			{
-				if(store.getManagerList().get(i).getName().equals(str))
+				
+				for(int j = 0; j < store.getDepartmentList().get(i).getManagerList().size(); j++)
+				{
+					if(store.getDepartmentList().get(i).getManagerList().get(j).getName().equals(str))
 					{
 						isEmployee = true;
-						index = i;
-						
-						
+						departmentIndex = i;
+						index = j;
+					}
 				}
 			}
+			
+			
 			if(isEmployee)
 			{
-				printManagerSchedule(store.getManagerList().get(index));
+				printManagerSchedule(store.getDepartmentList().get(departmentIndex).getManagerList().get(index));
 			}
 			
 			else 
 			{
-				JOptionPane.showMessageDialog(employeeErrorFrame, "Manager \"" + str + "\" doesn't exist", "Error finding employeee", 0);
+				JOptionPane.showMessageDialog(employeeErrorFrame, "Manager \"" + str + "\" doesn't exist in this Department", "Error finding Manager", 0);
 				return;
 			
 			}
@@ -463,9 +474,9 @@ public class WormsGUI extends JFrame
 			str = printScheduleEmployeeNameText.getText();
 			for(int i = 0; i < store.getDepartmentList().size(); i++)
 			{
-				for(int j = 0; j < store.getDepartmentList().get(i).getEmployeeList().size(); j++)
+				for(int j = 0; j < store.getDepartmentList().get(i).getSalesEmployeeList().size(); j++)
 				{
-					if(store.getDepartmentList().get(i).getEmployeeList().get(j).getName().equals(str))
+					if(store.getDepartmentList().get(i).getSalesEmployeeList().get(j).getName().equals(str))
 					{
 						isEmployee = true;
 						departmentIndex = i;
@@ -475,7 +486,7 @@ public class WormsGUI extends JFrame
 			}
 			if(isEmployee)
 			{
-				printEmployeeSchedule(store.getDepartmentList().get(departmentIndex).getEmployeeList().get(employeeIndex));
+				printEmployeeSchedule(store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex));
 			}
 			//System.out.println(str);
 			else 
@@ -506,9 +517,9 @@ public class WormsGUI extends JFrame
 			str = printTaskText.getText();
 			for(int i = 0; i < store.getDepartmentList().size(); i++)
 			{
-				for(int j = 0; j < store.getDepartmentList().get(i).getEmployeeList().size(); j++)
+				for(int j = 0; j < store.getDepartmentList().get(i).getSalesEmployeeList().size(); j++)
 				{
-					if(store.getDepartmentList().get(i).getEmployeeList().get(j).getName().equals(str))
+					if(store.getDepartmentList().get(i).getSalesEmployeeList().get(j).getName().equals(str))
 					{
 						isEmployee = true;
 						departmentIndex = i;
@@ -519,7 +530,7 @@ public class WormsGUI extends JFrame
 			if(isEmployee)
 			{
 				
-				printEmployeeTasks(store.getDepartmentList().get(departmentIndex).getEmployeeList().get(employeeIndex));
+				printEmployeeTasks(store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex));
 			}
 			//System.out.println(str);
 			else 
@@ -561,50 +572,56 @@ public class WormsGUI extends JFrame
 	}
 	private class hrFireOKButtonListener implements ActionListener
 	{
+		@SuppressWarnings("unused")
 		public void actionPerformed(ActionEvent e)
 		{
 			String str, str2;
 			boolean isEmployee = false;
-			boolean isHREmployee = false;
+			
 			int index = 0;
+			int departmentIndex = 0;
 			//int hrIndex = 0;
 			str = hrFireNameText.getText();
 			str2 = hrFireHRText.getText();
-			for(int i = 0; i < store.getSalesEmployeeList().size(); i++)
+			for(int i = 0; i < store.getDepartmentList().size(); i++)
 			{
-				if(store.getSalesEmployeeList().get(i).getName().equals(str))
+				for(int j = 0; j < store.getDepartmentList().get(i).getSalesEmployeeList().size(); j++)
+				{
+					if(store.getDepartmentList().get(i).getSalesEmployeeList().get(j).getName().equals(str))
 					{
 						isEmployee = true;
-						index = i;
-						
-						
+						departmentIndex = i;
+						index = j;
+					}
 				}
 			}
-			for(int i = 0; i < store.getHREmployeeList().size(); i++)
+			if(isEmployee)
 			{
-				if(store.getHREmployeeList().get(i).getName().equals(str2))
+				for(int i = 0; i < store.getDepartmentList().size(); i++)
 				{
-					isHREmployee = true;
-					//hrIndex = i;
+					for(int j = 0; j < store.getDepartmentList().get(i).getHREmployeeList().size(); j++)
+					{
+						if(store.getDepartmentList().get(i).getHREmployeeList().get(j).getName().equals(str2))
+						{
+							store.getDepartmentList().get(i).getHREmployeeList().get(j).
+							fire(store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(index), store.getDepartmentList().get(departmentIndex));
+							JOptionPane.showMessageDialog(hrFireSuccessFrame, "Successfully fired Employee \"" + str + "\"!", "Employee Fired", 1);
+							return;
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(hrHRErrorFrame, "HR Employee \"" + str2 + "\" doesn't exist", "Error finding HR Employee", 0);
+							return;
+						}
+					}
 				}
 			}
-			if(isEmployee  && isHREmployee)
-			{
-				store.fireEmployee(store.getSalesEmployeeList().get(index));
-				JOptionPane.showMessageDialog(hrFireSuccessFrame, "Successfully fired Employee \"" + str + "\"!", "Employee Fired", 1);
-			}
-			
-			if(!isHREmployee)
-			{
-				JOptionPane.showMessageDialog(hrHRErrorFrame, "HR Employee \"" + str2 + "\" doesn't exist", "Error finding HR Employee", 0);
-				return;
-			}
-			if(!isEmployee)
+			else
 			{
 				JOptionPane.showMessageDialog(hrEmployeeErrorFrame, "Employee \"" + str + "\" doesn't exist", "Error finding employeee", 0);
 				return;
-			
 			}
+			
 		}
 	}
 	private class hrFireCancelButtonListener implements ActionListener
@@ -618,33 +635,40 @@ public class WormsGUI extends JFrame
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			String str, str2, str3;
+			String employeeName, hrEmployeeName, salaryString, departmentString;
 			double salary = 0.0;
 			boolean isHREmployee = false;
-			str = hrHireNameText.getText();
-			str2 = hrHireHRText.getText();
-			str3 = hrHirePayText.getText();
-			salary = Double.parseDouble(str3);
-			for(int i = 0; i < store.getHREmployeeList().size(); i++)
+			employeeName = hrHireNameText.getText();
+			hrEmployeeName = hrHireHRText.getText();
+			salaryString = hrHirePayText.getText();
+			departmentString = hrHireDeptText.getText();
+			int hrEmployeeIndex = getHREmployeeIndex(hrEmployeeName);
+			int hrDepartmentIndex = getDepartmentIndexHR(hrEmployeeName);
+			int departmentIndex = getDepartmentIndexDepartment(departmentString);
+			if(salaryString.isEmpty())
 			{
-				if(store.getHREmployeeList().get(i).getName().equals(str2))
-				{
-					isHREmployee = true;
-					
-				}
+				JOptionPane.showMessageDialog(hrHRErrorFrame, "Salary field must not be empty", "Enter a salary", 0);
+				return;
 			}
-			if(isHREmployee)
+			salary = Double.parseDouble(salaryString);
+			if(departmentIndex == -1)
 			{
+				JOptionPane.showMessageDialog(hrHRErrorFrame, "Department doesn't exist", "Error finding Deparmtnet", 0);
+				return;
+			}
+			if(hrEmployeeIndex != -1)
+			{
+				
 				SalesEmployee employee = new SalesEmployee();
-				employee.setName(str);
-				employee.setSalary(salary);
-				store.hireEmployee(employee);
-				JOptionPane.showMessageDialog(hrHireSuccessFrame, "Successfully Hired Employee \"" + str + "\"!", "Employee Hired", 1);
+				employee.setName(employeeName);
+				//employee.setSalary(salary);
+				store.getDepartmentList().get(hrDepartmentIndex).getHREmployeeList().get(hrEmployeeIndex).hire(employee, store.getDepartmentList().get(departmentIndex), salary);
+				
+				JOptionPane.showMessageDialog(hrHireSuccessFrame, "Successfully Hired Employee \"" + employeeName + "\"!", "Employee Hired", 1);
 			}
-			
-			if(!isHREmployee)
+			else
 			{
-				JOptionPane.showMessageDialog(hrHRErrorFrame, "HR Employee \"" + str2 + "\" doesn't exist", "Error finding HR Employee", 0);
+				JOptionPane.showMessageDialog(hrHRErrorFrame, "HR Employee \"" + hrEmployeeName + "\" doesn't exist", "Error finding HR Employee", 0);
 				return;
 			}
 			
@@ -664,9 +688,8 @@ public class WormsGUI extends JFrame
 			String employeeNameString, hrNameString, salaryString, payIncreaseString;
 			double salary = 0.0;
 			double payIncrease = 0.0;
-			int index = 0;
-			boolean isHREmployee = false;
-			boolean isEmployee = false;
+			int employeeIndex = 0;
+			int departmentIndex = 0;
 			employeeNameString = hrEmployeeNameText.getText();
 			hrNameString = hrNameText.getText();
 			salaryString = hrAdjustSalaryText.getText();
@@ -678,51 +701,24 @@ public class WormsGUI extends JFrame
 				JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Enter a value for the Salary or the percent increase in pay", "Pay Rate Error", 0);
 				return;
 			}
-			
-			for(int i = 0; i < store.getHREmployeeList().size(); i++)
-			{
-				if(store.getHREmployeeList().get(i).getName().equals(hrNameString))
-				{
-					isHREmployee = true;
-					
-				}
-			}
-			for(int i = 0; i < store.getSalesEmployeeList().size(); i++)
-			{
-				if(store.getSalesEmployeeList().get(i).equals(employeeNameString))
-				{
-					isEmployee = true;
-					index = i;
-				}
-			}
-			if(isHREmployee && isEmployee)
-			{
-				if(salary == 0)
-				{
-					store.getSalesEmployeeList().get(index).setSalary(salary);
-					JOptionPane.showMessageDialog(hrHRErrorFrame, "Successfully changed Employee \"" + employeeNameString + "\"'s salary to " + store.getSalesEmployeeList().get(index).getSalary(), "Salary Changed", 1);
-					return;
-				}
-				else
-				{
-					store.getSalesEmployeeList().get(index).setRaise(payIncrease);
-					JOptionPane.showMessageDialog(hrHRErrorFrame, "Successfully changed Employee \"" + employeeNameString + "\"'s salary to " + store.getSalesEmployeeList().get(index).getSalary(), "Salary Changed", 1);
-					return;
-					
-				}
-
-			}
-			
-			if(!isHREmployee)
+			if(getHREmployeeIndex(hrNameString) == -1)
 			{
 				JOptionPane.showMessageDialog(hrHRErrorFrame, "HR Employee \"" + hrNameString + "\" doesn't exist", "Error finding HR Employee", 0);
 				return;
 			}
-			if(!isEmployee)
+			if(getSalesEmployeeIndex(employeeNameString) == -1)
 			{
 				JOptionPane.showMessageDialog(hrHRErrorFrame, "Employee \"" + employeeNameString + "\" doesn't exist", "Error finding Employee", 0);
 				return;
 			}
+			if(salary != 0.0) store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex).setSalary(salary);
+			else store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex).setRaise(payIncrease);
+			JOptionPane.showMessageDialog(hrHRErrorFrame, "Successfully changed Employee \"" + employeeNameString 
+					+ "\"'s salary to " + store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex).getSalary(), "Salary Changed", 1);
+			return;
+			
+			
+			
 			
 		}
 	}
@@ -833,6 +829,103 @@ public class WormsGUI extends JFrame
 		managerScheduleFrame.add(panel);
 		managerScheduleFrame.setVisible(true);
 		managerScheduleFrame.pack();
+	}
+	
+	
+	private int getDepartmentIndexDepartment(String departmentName)
+	{
+		for(int i = 0; i < store.getDepartmentList().size(); i++)
+		{
+			if(store.getDepartmentList().get(i).getName().equals(departmentName))
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+	private int getDepartmentIndexSales(String employeeName)
+	{
+		for(int i = 0; i < store.getDepartmentList().size(); i++)
+		{
+			for(int j = 0; j < store.getDepartmentList().get(i).getSalesEmployeeList().size(); j++)
+			{
+				if(store.getDepartmentList().get(i).getSalesEmployeeList().get(j).getName().equals(employeeName))
+				{
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+	private int getDepartmentIndexManager(String managerName)
+	{
+		for(int i = 0; i < store.getDepartmentList().size(); i++)
+		{
+			for(int j = 0; j < store.getDepartmentList().get(i).getManagerList().size(); j++)
+			{
+				if(store.getDepartmentList().get(i).getManagerList().get(j).getName().equals(managerName))
+				{
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+	private int getDepartmentIndexHR(String HRName)
+	{
+		for(int i = 0; i < store.getDepartmentList().size(); i++)
+		{
+			for(int j = 0; j < store.getDepartmentList().get(i).getHREmployeeList().size(); j++)
+			{
+				if(store.getDepartmentList().get(i).getHREmployeeList().get(j).getName().equals(HRName))
+				{
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+	private int getSalesEmployeeIndex(String employeeName)
+	{
+		for(int i = 0; i < store.getDepartmentList().size(); i++)
+		{
+			for(int j = 0; j < store.getDepartmentList().get(i).getSalesEmployeeList().size(); j++)
+			{
+				if(store.getDepartmentList().get(i).getSalesEmployeeList().get(j).getName().equals(employeeName))
+				{
+					return j;
+				}
+			}
+		}
+		return -1;
+	}
+	private int getManagerIndex(String managerName)
+	{
+		for(int i = 0; i < store.getDepartmentList().size(); i++)
+		{
+			for(int j = 0; j < store.getDepartmentList().get(i).getManagerList().size(); j++)
+			{
+				if(store.getDepartmentList().get(i).getManagerList().get(j).getName().equals(managerName))
+				{
+					return j;
+				}
+			}
+		}
+		return -1;
+	}
+	private int getHREmployeeIndex(String HRName)
+	{
+		for(int i = 0; i < store.getDepartmentList().size(); i++)
+		{
+			for(int j = 0; j < store.getDepartmentList().get(i).getHREmployeeList().size(); j++)
+			{
+				if(store.getDepartmentList().get(i).getHREmployeeList().get(j).getName().equals(HRName))
+				{
+					return j;
+				}
+			}
+		}
+		return -1;
 	}
 }
 

@@ -5,14 +5,14 @@ import java.util.ArrayList;
 
 import org.worms.hardware.*;
 
-public class Employee
+public abstract class Employee
 {
     private String name;
     private double salary;
     private ArrayList<Integer> workSchedule = new ArrayList<Integer>();
     private ArrayList<Integer> appointmentSchedule = new ArrayList<Integer>();
     private ArrayList<Task> taskList;
-    private Department department;
+    //private Department department;
     private String[] Week;
     
     public Employee()
@@ -55,15 +55,15 @@ public class Employee
     {
         return appointmentSchedule;
     }
-    public void setDepartment(Department department)
-    {
-        department.setEmployeeList(this);
-        this.department = department;
-    }
-    public Department getDepartment()
-    {
-        return department;
-    }
+    //public void setDepartment(Department department)
+    //{
+      //  department.setEmployeeList(this);
+      //  this.department = department;
+   // }
+  // public Department getDepartment()
+    //{
+     //   return department;
+   // }
     public void addTask(Task taskItem)
     {
         taskList.add(taskItem);

@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import org.worms.hardware.*;
 
 public class HREmployee  extends Employee{
-    private ArrayList<Employee> employeeList;
+    //private ArrayList<Employee> employeeList;
     private ArrayList<Integer> appointments;
     private Department department;
     private int i;
     
     public HREmployee() {
-        employeeList = new ArrayList<Employee>();
+        //employeeList = new ArrayList<Employee>();
         appointments = new ArrayList<Integer>();
         department = new Department();
         i = 0;
@@ -19,7 +19,7 @@ public class HREmployee  extends Employee{
     
     public void setDepartment(Department someD) {
         this.department = someD;
-        someD.setEmployeeList(this);
+        someD.setHREmployeeList(this);
         
     }
     
@@ -35,19 +35,37 @@ public class HREmployee  extends Employee{
         this.appointments.add(someA);
     }
     
-    public void hire(Employee e){
-        employeeList.add(e);
-    }
-    public void fire(Employee e, Department someD){
-        int i = 0;
+    public void hire(SalesEmployee e, Department department, double salary){
+        e.setSalary(salary);
+        e.setDepartment(department);
+        department.setSalesEmployeeList(e);
+    	
         
-        for(i = 0; i < someD.getEmployeeList().size(); i++){
+    }
+    public boolean fire(SalesEmployee e, Department someD) {
+        
+        for(int i = 0; i < someD.getSalesEmployeeList().size(); i++){
             //    System.out.println(someD.getEmployeeList().get(i).getName());
-            if(e == someD.getEmployeeList().get(i)){
-                someD.getEmployeeList().get(i).getDepartment().removeDept(e);
+            if(someD.getSalesEmployeeList().get(i).equals(e)){
+            	
+                someD.getSalesEmployeeList().get(i).getDepartment().removeFromDept(e);
+                return true;
                 
             }
         }
+        return false;
+    }
+    public boolean fire(Manager manager, Department department)
+    {
+    	for(int i = 0; i < department.getManagerList().size(); i++)
+    	{
+    		if(department.getManagerList().get(i).equals(manager))
+    		{
+    			department.getManagerList().remove(manager);
+    			return true;
+    		}
+    	}
+    	return false;
     }
     
     public boolean checkConflict(Integer time) {

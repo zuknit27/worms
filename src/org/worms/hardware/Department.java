@@ -2,18 +2,25 @@ package org.worms.hardware;
 import java.util.ArrayList;
 
 import org.worms.people.Employee;
+import org.worms.people.HREmployee;
+import org.worms.people.Manager;
+import org.worms.people.SalesEmployee;
 
 public class Department {
     
     private String name;
     private ArrayList<Product> product;
-    private ArrayList<Employee> employeeList;
+    private ArrayList<SalesEmployee> salesEmployeeList;
+    private ArrayList<Manager> managerList;
+    private ArrayList<HREmployee> hrEmployeeList;
     
     public Department() {
         
         name = "unknown";
         product = new ArrayList<Product>();
-        employeeList = new ArrayList<Employee>();
+        salesEmployeeList = new ArrayList<SalesEmployee>();
+        managerList = new ArrayList<Manager>();
+        hrEmployeeList = new ArrayList<HREmployee>();
         
     }
     
@@ -21,13 +28,8 @@ public class Department {
         return this.name;
     }
     
-    public void removeDept(Employee someE) {
-        //System.out.println("In remove department " + someE.getName());
-        for(int i = 0; i < this.employeeList.size();i++) {
-            if (this.employeeList.get(i) == someE) {
-                this.employeeList.remove(i);
-            }
-        }
+    public void removeFromDept(Employee someE) {
+        salesEmployeeList.remove(someE);
         
     }
     public void setName(String someName) {
@@ -42,13 +44,30 @@ public class Department {
         this.product.add(someP);
     }
     
-    public ArrayList<Employee> getEmployeeList() {
-        return this.employeeList;
+    public ArrayList<SalesEmployee> getSalesEmployeeList() {
+        return this.salesEmployeeList;
     }
     
-    public void setEmployeeList(Employee someE) {
-        this.employeeList.add(someE);
+    public void setSalesEmployeeList(SalesEmployee someE) {
+        this.salesEmployeeList.add(someE);
     }
+    public void setHREmployeeList(HREmployee hrEmployee)
+    {
+    	hrEmployeeList.add(hrEmployee);
+    }
+    public ArrayList<HREmployee> getHREmployeeList()
+    {
+    	return hrEmployeeList;
+    }
+    public void setManagerList(Manager manager)
+    {
+    	managerList.add(manager);
+    }
+    public ArrayList<Manager> getManagerList()
+    {
+    	return managerList;
+    }
+    
     
 }
 

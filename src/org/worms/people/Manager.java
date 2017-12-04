@@ -2,6 +2,7 @@ package org.worms.people;
 
 import java.util.ArrayList;
 
+
 import org.worms.hardware.*;
 public class Manager extends Employee {
     
@@ -18,6 +19,7 @@ public class Manager extends Employee {
         department = new Department();
         employeeList = new ArrayList<Employee>();
         product = new ArrayList<Product>();
+        
         
     }
     

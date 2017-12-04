@@ -8,9 +8,14 @@ import javax.swing.*;
 import org.worms.hardware.Store;
 import org.worms.people.Employee;
 import org.worms.people.Manager;
+import org.worms.people.SalesEmployee;
 
 public class WormsGUI extends JFrame
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Store store;
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
@@ -41,6 +46,15 @@ public class WormsGUI extends JFrame
 	private JTextField printScheduleEmployeeNameText;
 	private JTextField printTaskText;
 	private JTextField printScheduleManagerNameText;
+	private JTextField hrFireNameText;
+	private JTextField hrFireHRText;
+	private JTextField hrHirePayText;
+	private JTextField hrHireNameText;
+	private JTextField hrHireHRText;
+	private JTextField hrNameText;
+	private JTextField hrEmployeeNameText;
+	private JTextField hrAdjustSalaryText;
+	private JTextField hrIncreasePayText;
 	
 //////////frames//////////
 	private JFrame printScheduleFrame;
@@ -50,6 +64,14 @@ public class WormsGUI extends JFrame
 	private JFrame taskFrame;
 	private JFrame printManagerScheduleFrame;
 	private JFrame managerScheduleFrame;
+	private JFrame hrFireFrame;
+	private JFrame hrHRErrorFrame;
+	private JFrame hrEmployeeErrorFrame;
+	private JFrame hrFireSuccessFrame;
+	private JFrame hrHireFrame;
+	private JFrame hrHireSuccessFrame;
+	private JFrame hrPayRateFrame;
+	private JFrame hrPayRateErrorFrame;
 //////////text areas//////////
 	private JTextArea wormsText;
 	private JTextArea scheduleText;
@@ -200,15 +222,104 @@ public class WormsGUI extends JFrame
 	}
 	private void handleHRFire()
 	{
+		hrFireFrame = new JFrame("Fire an Employee");
+		hrFireFrame.setSize(300, 100);
+		hrFireFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//JPanel panel = new JPanel(new GridLayout(4,2));
+		JPanel panel = new JPanel(new FlowLayout());
+		JLabel messageLabel2 = new JLabel("Your name(must be HR Employee):");
+		hrFireHRText = new JTextField(15);
+		JLabel messageLabel = new JLabel("Employee To Fire:");
+		hrFireNameText = new JTextField(15);
 		
+		JButton hrFireOKButton = new JButton("OK");
+		JButton hrFireCancelButton = new JButton("Cancel");
+		
+		hrFireOKButton.addActionListener(new hrFireOKButtonListener());
+		hrFireCancelButton.addActionListener(new hrFireCancelButtonListener());
+		
+		panel.add(messageLabel2);
+		panel.add(hrFireHRText);
+		panel.add(messageLabel);
+		panel.add(hrFireNameText);
+		panel.add(hrFireOKButton);
+		panel.add(hrFireCancelButton);
+		
+		hrFireFrame.add(panel);
+		hrFireFrame.setVisible(true);
+		hrFireFrame.pack();
 	}
 	private void handleHRHire()
 	{
+		hrHireFrame = new JFrame("Hire an Employee");
+		hrHireFrame.setSize(300, 100);
+		hrHireFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//JPanel panel = new JPanel(new GridLayout(4,2));
+		JPanel panel = new JPanel(new FlowLayout());
+		JLabel messageLabel2 = new JLabel("Your name(must be HR Employee):");
+		hrHireHRText = new JTextField(15);
+		JLabel messageLabel = new JLabel("Employee To Hire:");
+		hrHireNameText = new JTextField(15);
+		JLabel messageLabel3 = new JLabel("Starting pay Rate:");
+		hrHirePayText = new JTextField(5);
 		
+		
+		JButton hrHireOKButton = new JButton("OK");
+		JButton hrHireCancelButton = new JButton("Cancel");
+		
+		hrHireOKButton.addActionListener(new hrHireOKButtonListener());
+		hrHireCancelButton.addActionListener(new hrHireCancelButtonListener());
+		
+		panel.add(messageLabel2);
+		panel.add(hrHireHRText);
+		panel.add(messageLabel);
+		panel.add(hrHireNameText);
+		panel.add(messageLabel3);
+		panel.add(hrHirePayText);
+		panel.add(hrHireOKButton);
+		panel.add(hrHireCancelButton);
+		
+		hrHireFrame.add(panel);
+		hrHireFrame.setVisible(true);
+		hrHireFrame.pack();
 	}
 	private void handleHRPayRate()
 	{
+		hrPayRateFrame = new JFrame("Adjust Employee's Pay Rate");
+		hrPayRateFrame.setSize(300, 100);
+		hrPayRateFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//JPanel panel = new JPanel(new GridLayout(4,2));
+		JPanel panel = new JPanel(new FlowLayout());
+		JLabel messageLabel2 = new JLabel("Your name(must be HR Employee):");
+		hrNameText = new JTextField(15);
+		JLabel messageLabel = new JLabel("Employee's pay to adjust:");
+		hrEmployeeNameText = new JTextField(15);
+		JLabel messageLabel3 = new JLabel("Adjust Salary:");
+		hrAdjustSalaryText = new JTextField(10);
+		JLabel messageLabel4 = new JLabel("Pay Increase %:");
+		hrIncreasePayText = new JTextField(10);
 		
+		
+		JButton hrPayRateOKButton = new JButton("OK");
+		JButton hrPayRateCancelButton = new JButton("Cancel");
+		
+		hrPayRateOKButton.addActionListener(new hrPayRateOKButtonListener());
+		hrPayRateCancelButton.addActionListener(new hrPayRateCancelButtonListener());
+		
+		panel.add(messageLabel2);
+		panel.add(hrNameText);
+		panel.add(messageLabel);
+		panel.add(hrEmployeeNameText);
+		panel.add(messageLabel3);
+		panel.add(hrAdjustSalaryText);
+		panel.add(messageLabel4);
+		panel.add(hrIncreasePayText);
+		panel.add(hrPayRateOKButton);
+		panel.add(hrPayRateCancelButton);
+		
+		hrPayRateFrame.add(panel);
+		hrPayRateFrame.setVisible(true);
+		hrPayRateFrame.pack();
 	}
 	private void handleHRPrintEmployeeList()
 	{
@@ -312,6 +423,7 @@ public class WormsGUI extends JFrame
 		public void actionPerformed(ActionEvent e)
 		{
 			String str;
+			
 			boolean isEmployee = false;
 			int index = 0;
 			
@@ -445,6 +557,180 @@ public class WormsGUI extends JFrame
 		public void actionPerformed(ActionEvent e)
 		{
 			printTaskFrame.setVisible(false);
+		}
+	}
+	private class hrFireOKButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			String str, str2;
+			boolean isEmployee = false;
+			boolean isHREmployee = false;
+			int index = 0;
+			//int hrIndex = 0;
+			str = hrFireNameText.getText();
+			str2 = hrFireHRText.getText();
+			for(int i = 0; i < store.getSalesEmployeeList().size(); i++)
+			{
+				if(store.getSalesEmployeeList().get(i).getName().equals(str))
+					{
+						isEmployee = true;
+						index = i;
+						
+						
+				}
+			}
+			for(int i = 0; i < store.getHREmployeeList().size(); i++)
+			{
+				if(store.getHREmployeeList().get(i).getName().equals(str2))
+				{
+					isHREmployee = true;
+					//hrIndex = i;
+				}
+			}
+			if(isEmployee  && isHREmployee)
+			{
+				store.fireEmployee(store.getSalesEmployeeList().get(index));
+				JOptionPane.showMessageDialog(hrFireSuccessFrame, "Successfully fired Employee \"" + str + "\"!", "Employee Fired", 1);
+			}
+			
+			if(!isHREmployee)
+			{
+				JOptionPane.showMessageDialog(hrHRErrorFrame, "HR Employee \"" + str2 + "\" doesn't exist", "Error finding HR Employee", 0);
+				return;
+			}
+			if(!isEmployee)
+			{
+				JOptionPane.showMessageDialog(hrEmployeeErrorFrame, "Employee \"" + str + "\" doesn't exist", "Error finding employeee", 0);
+				return;
+			
+			}
+		}
+	}
+	private class hrFireCancelButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			hrFireFrame.setVisible(false);
+		}
+	}
+	private class hrHireOKButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			String str, str2, str3;
+			double salary = 0.0;
+			boolean isHREmployee = false;
+			str = hrHireNameText.getText();
+			str2 = hrHireHRText.getText();
+			str3 = hrHirePayText.getText();
+			salary = Double.parseDouble(str3);
+			for(int i = 0; i < store.getHREmployeeList().size(); i++)
+			{
+				if(store.getHREmployeeList().get(i).getName().equals(str2))
+				{
+					isHREmployee = true;
+					
+				}
+			}
+			if(isHREmployee)
+			{
+				SalesEmployee employee = new SalesEmployee();
+				employee.setName(str);
+				employee.setSalary(salary);
+				store.hireEmployee(employee);
+				JOptionPane.showMessageDialog(hrHireSuccessFrame, "Successfully Hired Employee \"" + str + "\"!", "Employee Hired", 1);
+			}
+			
+			if(!isHREmployee)
+			{
+				JOptionPane.showMessageDialog(hrHRErrorFrame, "HR Employee \"" + str2 + "\" doesn't exist", "Error finding HR Employee", 0);
+				return;
+			}
+			
+		}
+	}
+	private class hrHireCancelButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			hrHireFrame.setVisible(false);
+		}
+	}
+	private class hrPayRateOKButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			String employeeNameString, hrNameString, salaryString, payIncreaseString;
+			double salary = 0.0;
+			double payIncrease = 0.0;
+			int index = 0;
+			boolean isHREmployee = false;
+			boolean isEmployee = false;
+			employeeNameString = hrEmployeeNameText.getText();
+			hrNameString = hrNameText.getText();
+			salaryString = hrAdjustSalaryText.getText();
+			payIncreaseString = hrIncreasePayText.getText();
+			if(!salaryString.isEmpty()) salary = Double.parseDouble(salaryString);
+			if(!payIncreaseString.isEmpty()) payIncrease = Double.parseDouble(payIncreaseString);
+			if(salary == 0.0 && payIncrease == 0.0)
+			{
+				JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Enter a value for the Salary or the percent increase in pay", "Pay Rate Error", 0);
+				return;
+			}
+			
+			for(int i = 0; i < store.getHREmployeeList().size(); i++)
+			{
+				if(store.getHREmployeeList().get(i).getName().equals(hrNameString))
+				{
+					isHREmployee = true;
+					
+				}
+			}
+			for(int i = 0; i < store.getSalesEmployeeList().size(); i++)
+			{
+				if(store.getSalesEmployeeList().get(i).equals(employeeNameString))
+				{
+					isEmployee = true;
+					index = i;
+				}
+			}
+			if(isHREmployee && isEmployee)
+			{
+				if(salary == 0)
+				{
+					store.getSalesEmployeeList().get(index).setSalary(salary);
+					JOptionPane.showMessageDialog(hrHRErrorFrame, "Successfully changed Employee \"" + employeeNameString + "\"'s salary to " + store.getSalesEmployeeList().get(index).getSalary(), "Salary Changed", 1);
+					return;
+				}
+				else
+				{
+					store.getSalesEmployeeList().get(index).setRaise(payIncrease);
+					JOptionPane.showMessageDialog(hrHRErrorFrame, "Successfully changed Employee \"" + employeeNameString + "\"'s salary to " + store.getSalesEmployeeList().get(index).getSalary(), "Salary Changed", 1);
+					return;
+					
+				}
+
+			}
+			
+			if(!isHREmployee)
+			{
+				JOptionPane.showMessageDialog(hrHRErrorFrame, "HR Employee \"" + hrNameString + "\" doesn't exist", "Error finding HR Employee", 0);
+				return;
+			}
+			if(!isEmployee)
+			{
+				JOptionPane.showMessageDialog(hrHRErrorFrame, "Employee \"" + employeeNameString + "\" doesn't exist", "Error finding Employee", 0);
+				return;
+			}
+			
+		}
+	}
+	private class hrPayRateCancelButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			hrPayRateFrame.setVisible(false);
 		}
 	}
 	

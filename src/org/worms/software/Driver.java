@@ -56,8 +56,22 @@ public class Driver
         //Add to department
         mang1.setDepartment(dept1);
         
+        //add manager to manager list of the store
+        store.setManagerList(mang1);
+        
         
         hr1.setDepartment(dept1);
+        
+        //add hr employee to hr employee list of the store
+        store.setHREmployeeList(hr1);
+        
+        
+        //add sales employee to sales employee list of the store
+        store.setSalesEmployee(sales1);
+        store.setSalesEmployee(sales2);
+        store.setSalesEmployee(sales3);
+        
+        
         sales1.setDepartment(dept1);
         sales2.setDepartment(dept1);
         sales3.setDepartment(dept1);
@@ -224,8 +238,8 @@ public class Driver
         for (int i = 0; i < hr1.getAppointments().size(); i++) {
             System.out.println(hr1.getAppointments().get(i));
         }
-        //WormsGUI newGUI;
-        //    newGUI = new WormsGUI("I've Got Worms");
+        WormsGUI newGUI;
+        newGUI = new WormsGUI("I've Got Worms", store);
     }
 }
 

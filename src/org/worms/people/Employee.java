@@ -14,11 +14,7 @@ public class Employee
     private ArrayList<Task> taskList;
     private Department department;
     private String[] Week;
-    public void setRaise(float somePercent) {
-        
-        this.setSalary(((somePercent/100) * this.getSalary()) + this.getSalary());
-        
-    }
+    
     public Employee()
     {
         this.name = "unknown";
@@ -105,6 +101,11 @@ public class Employee
         
         
         return false;
+    }
+    public void setRaise(double somePercent) {
+        
+        this.setSalary(((somePercent/100) * this.getSalary()) + this.getSalary());
+        
     }
 }
 

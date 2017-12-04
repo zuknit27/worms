@@ -65,7 +65,8 @@ public class HREmployee  extends Employee{
     public void scheduleAppointment(Employee someE, int time){
         //military time EX. 113 is monday at 1PM, 309 = Wendnesday at 9AM
         int hours = (time%100);
-        for (int i = 0; i < someE.getWorkSchedule().size(); i++) {
+        for (int i = 0; i < someE.getWorkSchedule().size(); i++) 
+        {
             if(time >= someE.getWorkSchedule().get(i));
             if(hours > 72 || (time/100) > 5) {
                 System.out.println("Appointments can only be scheduled during store operation hours");

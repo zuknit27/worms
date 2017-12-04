@@ -2,26 +2,29 @@ package org.worms.hardware;
 
 import java.util.ArrayList;
 
-import org.worms.people.Employee;
+import org.worms.people.SalesEmployee;
 import org.worms.people.Manager;
+import org.worms.people.HREmployee;
 
 public class Store {
     
     private String name;
-    private ArrayList<Employee> employeeList;
+    private ArrayList<SalesEmployee> salesEmployeeList;
     private ArrayList<Manager> managerList;
     private ArrayList<Department> departmentList;
     private ArrayList<Product> productList;
     private ArrayList<Task> taskList;
+    private ArrayList<HREmployee> hrEmployeeList;
     //    private ArrayList<Integer> hours;
     
     public Store() {
         name = "unknown";
-        employeeList = new ArrayList<Employee>();
+        salesEmployeeList = new ArrayList<SalesEmployee>();
         departmentList = new ArrayList<Department>();
         productList = new ArrayList<Product>();
         taskList = new ArrayList<Task>();
         managerList = new ArrayList<Manager>();
+        hrEmployeeList = new ArrayList<HREmployee>();
         //    hours = new ArrayList<Integer>();
         
     }
@@ -34,12 +37,12 @@ public class Store {
         this.name = someN;
     }
     
-    public ArrayList<Employee> getAllEmployees(){
-        return this.employeeList;
+    public ArrayList<SalesEmployee> getSalesEmployeeList(){
+        return this.salesEmployeeList;
     }
     
-    public void setEmployeeSet(Employee someE) {
-        this.employeeList.add(someE);
+    public void setSalesEmployee(SalesEmployee someE) {
+        this.salesEmployeeList.add(someE);
     }
     
     public ArrayList<Department> getDepartmentList(){
@@ -76,6 +79,22 @@ public class Store {
     public static String scheduleToString(int schedule)
     {
         return "fix this";
+    }
+    public void setHREmployeeList(HREmployee e)
+    {
+    	hrEmployeeList.add(e);
+    }
+    public ArrayList<HREmployee> getHREmployeeList()
+    {
+    	return hrEmployeeList;
+    }
+    public void fireEmployee(SalesEmployee e)
+    {
+    	salesEmployeeList.remove(e);
+    }
+    public void hireEmployee(SalesEmployee e)
+    {
+    	salesEmployeeList.add(e);
     }
     
 }

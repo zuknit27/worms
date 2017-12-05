@@ -11,7 +11,7 @@ public class SalesEmployee  extends Employee{
     private Manager manager;
     private Department department;
     private int punchTime;
-    private ArrayList<Integer> schedule = new ArrayList<Integer>();
+    //private ArrayList<Integer> schedule = new ArrayList<Integer>();
     private ArrayList<Task> taskList = new ArrayList<Task>();
     
     public SalesEmployee()
@@ -63,14 +63,13 @@ public class SalesEmployee  extends Employee{
         return this.position;
     }
     
-    public void addToSchedule(int schedule)
-    {
-        this.schedule.add(schedule);
-    }
+//    public void addToSchedule(int schedule)
+//    {
+//        this.schedule.add(schedule);
+//    }
     public void addTask(Task taskItem)
     {
         this.taskList.add(taskItem);
-        taskItem.setEmployeeList(this);
         super.addTask(taskItem);
     }
     public void removeTask(Task taskItem)

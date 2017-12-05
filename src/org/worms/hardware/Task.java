@@ -1,20 +1,20 @@
 package org.worms.hardware;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
-import org.worms.people.Employee;
+//import org.worms.people.Employee;
 
 
 public class Task {
     
     private boolean completed;
     private String name;
-    private ArrayList<Employee> employeeList;
+    //private ArrayList<Employee> employeeList;
     
     public Task () {
         
         completed = false;
         name = "unknown";
-        employeeList = new ArrayList<Employee>();
+        //employeeList = new ArrayList<Employee>();
         
     }
     
@@ -34,15 +34,15 @@ public class Task {
         this.name = someName;
     }
     
-    public ArrayList<Employee> getEmployeeList(){
-        return this.employeeList;
-    }
-    
-    public void setEmployeeList(Employee someE) {
-        
-        this.employeeList.add(someE);
-        
-    }
+//    public ArrayList<Employee> getEmployeeList(){
+//        return this.employeeList;
+//    }
+//    
+//    public void setEmployeeList(Employee someE) {
+//        
+//        this.employeeList.add(someE);
+//        
+//    }
     
 }
 

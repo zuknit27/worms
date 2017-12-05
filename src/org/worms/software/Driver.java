@@ -1,12 +1,14 @@
 package org.worms.software;
 
+import java.io.IOException;
+
 import org.worms.hardware.*;
 import org.worms.people.*;
 
 
 public class Driver
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
         
         
@@ -31,6 +33,9 @@ public class Driver
         
         //Set names
         dept1.setName("Worm Sales");
+        
+        //add department to store
+        store.setDepartment(dept1);
         
         mang1.setName("Mike");
         hr1.setName("Henry");
@@ -116,20 +121,20 @@ public class Driver
         sales3.setPosition("Cashier");
         
         //Set schedules
-        sales1.addToWorkSchedule(100);
-        sales1.addToWorkSchedule(200);
-        sales1.addToWorkSchedule(300);
-        sales1.addToWorkSchedule(400);
-        sales1.addToWorkSchedule(500);
+        sales1.setWorkSchedule(100);
+        sales1.setWorkSchedule(200);
+        sales1.setWorkSchedule(300);
+        sales1.setWorkSchedule(400);
+        sales1.setWorkSchedule(500);
         
-        sales2.addToWorkSchedule(124);
-        sales2.addToWorkSchedule(324);
-        sales2.addToWorkSchedule(524);
+        sales2.setWorkSchedule(124);
+        sales2.setWorkSchedule(324);
+        sales2.setWorkSchedule(524);
         
-        sales3.addToWorkSchedule(148);
-        sales3.addToWorkSchedule(248);
-        sales3.addToWorkSchedule(448);
-        sales3.addToWorkSchedule(548);
+        sales3.setWorkSchedule(148);
+        sales3.setWorkSchedule(248);
+        sales3.setWorkSchedule(448);
+        sales3.setWorkSchedule(548);
         
         //setting punch times for monday
         sales1.setPunch(101);
@@ -238,6 +243,9 @@ public class Driver
         for (int i = 0; i < hr1.getAppointments().size(); i++) {
             System.out.println(hr1.getAppointments().get(i));
         }
+       
+        System.out.println("the department size is " + store.getDepartmentList().size());
+        //System.out.println(store.getDepartmentList().get(0).getHREmployeeList().size());
         WormsGUI newGUI;
         newGUI = new WormsGUI("I've Got Worms", store);
     }

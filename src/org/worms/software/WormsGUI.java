@@ -3,18 +3,22 @@ package org.worms.software;
 import java.awt.*;
 
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import org.worms.hardware.Store;
+import org.worms.hardware.Task;
 import org.worms.people.Employee;
 import org.worms.people.Manager;
 import org.worms.people.SalesEmployee;
 
 public class WormsGUI extends JFrame
 {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private Store store;
 	private JMenuBar menuBar;
@@ -56,6 +60,10 @@ public class WormsGUI extends JFrame
 	private JTextField hrEmployeeNameText;
 	private JTextField hrAdjustSalaryText;
 	private JTextField hrIncreasePayText;
+	private JTextField managerNameText;
+	private JTextField managerEmpNameText;
+	private JTextField managerTaskText;
+	private JTextField taskNumberText;
 	
 //////////frames//////////
 	private JFrame printScheduleFrame;
@@ -73,27 +81,42 @@ public class WormsGUI extends JFrame
 	private JFrame hrHireSuccessFrame;
 	private JFrame hrPayRateFrame;
 	private JFrame hrPayRateErrorFrame;
-//////////text areas//////////
+	private JFrame hrEmployeeFrame;
+	private JFrame managerPrintEmployeeFrame;
+	private JFrame employeeListFrame;
+	private JFrame managerAssignTaskFrame;
+	private JFrame managerRemoveTaskFrame;
+	private JFrame taskListFrame;
+
+	//////////text areas//////////
 	private JTextArea wormsText;
 	private JTextArea scheduleText;
 	private JTextArea taskText;
 	private JTextArea managerScheduleText;
+	private JTextArea employeeListText;
+	private JTextArea managerEmployeeListText;
+	private JTextArea taskListText;
+	
 	
 
 
 
-	public WormsGUI(String windowTitle, Store store)
+	public WormsGUI(String windowTitle, Store store) throws IOException
 	{
 		
 		super("     " + windowTitle);
 		
 		this.store = store;
 		setResizable(true);
-		setSize(500, 300);
+		//setSize(500, 300);
+		setPreferredSize(new Dimension(400,300));
 		wormsText = new JTextArea("     Welcome to I've Got Worms.");
-		add(wormsText);
-		setLayout(new FlowLayout(FlowLayout.LEFT));
+		BufferedImage image = ImageIO.read(new File("./earthWormJim.jpg"));
+		JLabel imageLabel = new JLabel(new ImageIcon(image));
 		
+		setLayout(new FlowLayout(FlowLayout.CENTER));
+		add(wormsText);
+		add(imageLabel);
 		buildGUI();
 		setVisible(true);
 		pack();
@@ -328,12 +351,61 @@ public class WormsGUI extends JFrame
 	}
 	private void handleHRPrintEmployeeList()
 	{
+		hrEmployeeFrame = new JFrame("Print All Employee's");
+		hrEmployeeFrame.setSize(300, 500);
+		hrEmployeeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JPanel panel = new JPanel(new FlowLayout());
+		employeeListText = new JTextArea();
+		employeeListText.append("Manager     Department     Salary\n");
+		for(int i = 0; i < store.getDepartmentList().size(); i++)
+		{
+			for(int j = 0; j < store.getDepartmentList().get(i).getManagerList().size(); j++)
+			{
+				employeeListText.append(store.getDepartmentList().get(i).getManagerList().get(j).getName() + 
+						"     " + store.getDepartmentList().get(i).getName() + 
+						"     " + store.getDepartmentList().get(i).getManagerList().get(j).getSalary() + "\n");
+			}
+		}
+		employeeListText.append("\nHR Employee     Department     Salary\n");
+		for(int i = 0; i < store.getDepartmentList().size(); i++)
+		{
+			for(int j = 0; j < store.getDepartmentList().get(i).getHREmployeeList().size(); j++)
+			{
+				employeeListText.append(store.getDepartmentList().get(i).getHREmployeeList().get(j).getName() + 
+						"     " + store.getDepartmentList().get(i).getName() + 
+						"     " + store.getDepartmentList().get(i).getHREmployeeList().get(j).getSalary() + "\n");
+			}
+		}
+		employeeListText.append("\nSales Employees     Department     Salary\n");
+		for(int i = 0; i < store.getDepartmentList().size(); i++)
+		{
+			for(int j = 0; j < store.getDepartmentList().get(i).getSalesEmployeeList().size(); j++)
+			{
+				employeeListText.append(store.getDepartmentList().get(i).getSalesEmployeeList().get(j).getName() + 
+						"          " + store.getDepartmentList().get(i).getName() + 
+						"          " + store.getDepartmentList().get(i).getSalesEmployeeList().get(j).getSalary() + "\n");
+			}
+		}
+		System.out.println(store.getDepartmentList().get(0).getSalesEmployeeList().get(0).getName());
+		System.out.println(store.getDepartmentList().get(0).getSalesEmployeeList().get(0).getSalary());
+		System.out.println(store.getDepartmentList().get(0).getSalesEmployeeList().get(1).getName());
+		System.out.println(store.getDepartmentList().get(0).getSalesEmployeeList().get(1).getSalary());
+		JButton hrPrintOKButton = new JButton("OK");
+		hrPrintOKButton.addActionListener(new hrPrintOKButtonListener());
+		
+		panel.add(employeeListText);
+		panel.add(hrPrintOKButton);
+		
+		hrEmployeeFrame.add(panel);
+		hrEmployeeFrame.setVisible(true);
+		hrEmployeeFrame.pack();
+		
 		
 	}
 	private void handleEmployeeViewTasks()
 	{
 		printTaskFrame = new JFrame("Print Employee Tasks");
-		//printTaskFarme.setSize(300, 100);
+		
 		printTaskFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel panel = new JPanel(new FlowLayout());
 		JLabel messageLabel = new JLabel("Employee Name:");
@@ -404,15 +476,87 @@ public class WormsGUI extends JFrame
 	}
 	private void handleManagerPrintEmployeeList()
 	{
+		managerPrintEmployeeFrame = new JFrame("Are you a Manager?");
+		managerPrintEmployeeFrame.setPreferredSize(new Dimension(400,400));
+		managerPrintEmployeeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JPanel panel = new JPanel(new FlowLayout());
+		JLabel messageLabel = new JLabel("Manager's Name:");
+		managerNameText = new JTextField(15);
+		JButton managerPrintOKButton = new JButton("OK");
+		JButton managerPrintCancelButton = new JButton("Cancel");
+		
+		managerPrintOKButton.addActionListener(new managerPrintOKButtonListener());
+		managerPrintCancelButton.addActionListener(new managerPrintCancelButtonListener());
+		
+		panel.add(messageLabel);
+		panel.add(managerNameText);
+		panel.add(managerPrintOKButton);
+		panel.add(managerPrintCancelButton);
+		
+		managerPrintEmployeeFrame.add(panel);
+		managerPrintEmployeeFrame.setVisible(true);
+		managerPrintEmployeeFrame.pack();
 		
 	}
 	private void handleManagerAssignTask()
 	{
+		managerAssignTaskFrame = new JFrame("Assign Task to Sales Employee");
+		managerAssignTaskFrame.setPreferredSize(new Dimension(300,300));
+		managerAssignTaskFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JPanel panel = new JPanel(new FlowLayout());
+		JLabel messageLabel = new JLabel("Employee:");
+		managerEmpNameText = new JTextField(15);
+		JLabel messageLabel2 = new JLabel("Task to Assign:");
+		managerTaskText = new JTextField(50);
+		JLabel messageLabel3 = new JLabel("Manager:");
+		managerNameText = new JTextField(15);
+		JButton managerAssignTaskOKButton = new JButton("Assign");
+		JButton managerAssignTaskCancelButton = new JButton("Cancel");
+		
+		managerAssignTaskOKButton.addActionListener(new managerAssignTaskOKButtonListener());
+		managerAssignTaskCancelButton.addActionListener(new managerAssignTaskCancelButtonListener());
+		
+		panel.add(messageLabel3);
+		panel.add(managerNameText);
+		panel.add(messageLabel);
+		panel.add(managerEmpNameText);
+		panel.add(messageLabel2);
+		panel.add(managerTaskText);
+		panel.add(managerAssignTaskOKButton);
+		panel.add(managerAssignTaskCancelButton);
+		
+		managerAssignTaskFrame.add(panel);
+		managerAssignTaskFrame.setVisible(true);
+		managerAssignTaskFrame.pack();
 		
 	}
 	private void handleManagerRemoveTask()
 	{
+		managerRemoveTaskFrame = new JFrame("Remove a Task");
+		//managerRemoveTaskFrame.setPreferredSize(new Dimension(300, 300));
+		managerRemoveTaskFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JPanel panel = new JPanel(new FlowLayout());
+		JLabel messageLabel = new JLabel("Manager:");
+		managerNameText = new JTextField(15);
+		JLabel messageLabel2 = new JLabel("Employee:");
+		managerEmpNameText = new JTextField(15);
 		
+		JButton managerRemoveTaskOKButton = new JButton("OK");
+		JButton managerRemoveTaskCancelButton = new JButton("Cancel");
+		
+		managerRemoveTaskOKButton.addActionListener(new managerRemoveTaskOKButtonListener());
+		managerRemoveTaskCancelButton.addActionListener(new managerRemoveTaskCancelButtonListener());
+		
+		panel.add(messageLabel);
+		panel.add(managerNameText);
+		panel.add(messageLabel2);
+		panel.add(managerEmpNameText);
+		panel.add(managerRemoveTaskOKButton);
+		panel.add(managerRemoveTaskCancelButton);
+		
+		managerRemoveTaskFrame.add(panel);
+		managerRemoveTaskFrame.setVisible(true);
+		managerRemoveTaskFrame.pack();
 	}
 	
 		
@@ -689,8 +833,10 @@ public class WormsGUI extends JFrame
 			double salary = 0.0;
 			double payIncrease = 0.0;
 			int employeeIndex = 0;
+			
 			int departmentIndex = 0;
 			employeeNameString = hrEmployeeNameText.getText();
+			employeeIndex = getSalesEmployeeIndex(employeeNameString);
 			hrNameString = hrNameText.getText();
 			salaryString = hrAdjustSalaryText.getText();
 			payIncreaseString = hrIncreasePayText.getText();
@@ -727,6 +873,68 @@ public class WormsGUI extends JFrame
 		public void actionPerformed(ActionEvent e)
 		{
 			hrPayRateFrame.setVisible(false);
+		}
+	}
+	private class hrPrintOKButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			hrEmployeeFrame.setVisible(false);
+		}
+	}
+	private class managerPrintOKButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			boolean isValidPassword = false;
+			String managerNameString;
+			managerNameString = managerNameText.getText();
+			int departmentIndex = getDepartmentIndexManager(managerNameString);
+			if(departmentIndex == -1)
+			{
+				JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Manager doesn't exist", "Manager not found", 0);
+				return;
+			}
+			else
+			{
+				isValidPassword = createPasswordFrame();
+				if(isValidPassword)
+				{
+					employeeListFrame = new JFrame("Print List of Employees");
+					employeeListFrame.setPreferredSize(new Dimension(400,400));
+					employeeListFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					JPanel panel = new JPanel(new FlowLayout());
+					managerEmployeeListText = new JTextArea();
+					managerEmployeeListText.append("Employees:\n");
+					for(int i = 0; i < store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().size(); i++)
+					{
+						managerEmployeeListText.append(store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(i).getName() + "\n");
+					}
+					JButton managerOKButton = new JButton("OK");
+					managerOKButton.addActionListener(new managerOKButtonListener());
+					panel.add(managerEmployeeListText);
+					panel.add(managerOKButton);
+					
+					employeeListFrame.add(panel);
+					employeeListFrame.setVisible(true);
+					employeeListFrame.pack();
+				}
+			}
+			
+		}
+	}
+	private class managerPrintCancelButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			managerPrintEmployeeFrame.setVisible(false);
+		}
+	}
+	private class managerOKButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			employeeListFrame.setVisible(false);
 		}
 	}
 	
@@ -926,6 +1134,187 @@ public class WormsGUI extends JFrame
 			}
 		}
 		return -1;
+	}
+
+	private class managerAssignTaskOKButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			boolean isValidPassword = false;
+			String managerNameString, employeeNameString, taskString;
+			managerNameString = managerNameText.getText();
+			employeeNameString = managerEmpNameText.getText();
+			taskString = managerTaskText.getText();
+			int departmentIndex = getDepartmentIndexManager(managerNameString);
+			int employeeIndex = getSalesEmployeeIndex(employeeNameString);
+			if(departmentIndex == -1)
+			{
+				JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Manager doesn't exist", "Manager not found", 0);
+				return;
+			}
+			if(employeeIndex == -1)
+			{
+				JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Employee doesn't exist", "Sales Employee not found", 0);
+				return;
+			}
+			if(taskString.isEmpty())
+			{
+				JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Task field must not be empty", "Task error", 0);
+				return;
+			}
+			isValidPassword = createPasswordFrame();
+			if(isValidPassword)
+			{
+				Task task = new Task();
+				task.setName(taskString);
+				store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex).addTask(task);
+				JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Task added successfully", "Task added", 1);
+				return;
+			}
+			
+		}
+	}
+	private class managerAssignTaskCancelButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			managerAssignTaskFrame.setVisible(false);
+		}
+	}
+	private class managerRemoveTaskOKButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			boolean isValidPassword = false;
+			String managerNameString, employeeNameString;
+			managerNameString = managerNameText.getText();
+			employeeNameString = managerEmpNameText.getText();
+			int departmentIndex = getDepartmentIndexManager(managerNameString);
+			int employeeIndex = getSalesEmployeeIndex(employeeNameString);
+			if(departmentIndex == -1)
+			{
+				JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Manager doesn't exist", "Manager not found", 0);
+				return;
+			}
+			if(employeeIndex == -1)
+			{
+				JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Employee doesn't exist", "Sales Employee not found", 0);
+				return;
+			}
+			isValidPassword = createPasswordFrame();
+			if(isValidPassword)
+			{
+				int taskCount;
+				taskListFrame = new JFrame("List of Task for Employee");
+				taskListFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				JPanel panel = new JPanel(new FlowLayout());
+				taskListText = new JTextArea();
+				taskListText.append("Tasks for " + store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex).getName() + ":\n");
+				for(int i = 0; i < store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex).getTaskList().size(); i++)
+				{
+					taskCount = i+1;
+					taskListText.append(taskCount + ".  " +
+							store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex).getTaskList().get(i).getName() + "\n");
+				}
+				
+				JLabel messageLabel = new JLabel("Enter Task Number to Remove:");
+				taskNumberText = new JTextField(5);
+				//enter task number here
+				JButton taskListOKButton = new JButton("OK");
+				JButton taskListCancelButton = new JButton("Cancel");
+				
+				taskListOKButton.addActionListener(new taskListOKButtonListener());
+				taskListCancelButton.addActionListener(new taskListCancelButtonListener());
+				
+				panel.add(taskListText);
+				panel.add(messageLabel);
+				panel.add(taskNumberText);
+				panel.add(taskListOKButton);
+				panel.add(taskListCancelButton);
+				
+				taskListFrame.add(panel);
+				taskListFrame.setVisible(true);
+				taskListFrame.pack();
+			}
+		}
+	}
+	private class managerRemoveTaskCancelButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			managerRemoveTaskFrame.setVisible(false);
+		}
+	}
+	private class taskListOKButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			String managerNameString, employeeNameString, taskNumberString;
+			managerNameString = managerNameText.getText();
+			employeeNameString = managerEmpNameText.getText();
+			taskNumberString = taskNumberText.getText();
+			if(taskNumberString.isEmpty())
+			{
+				JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Choose a task to remove", "Task number not entered", 0);
+				return;
+			}
+			int index = Integer.parseInt(taskNumberString);
+			index--;
+			int departmentIndex = getDepartmentIndexManager(managerNameString);
+			int employeeIndex = getSalesEmployeeIndex(employeeNameString);
+			if(store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex).getTaskList().get(index).getCompleted())
+			{
+				store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex).getTaskList().remove(index);
+				JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Task Removed Successfully", "Task Removed", 1);
+				return;
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Task is not completed", "Task Removal Error", 0);
+				return;
+			}
+			
+		}
+	}
+	private class taskListCancelButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			taskListFrame.setVisible(false);
+		}
+	}
+	
+	
+	
+	private boolean createPasswordFrame()
+	{
+		
+		JPanel panel = new JPanel();
+		JLabel label = new JLabel("Enter a password:");
+		JPasswordField password = new JPasswordField(20);
+		panel.add(label);
+		panel.add(password);
+		String[] options = new String[] {"OK", "Cancel"};
+		int option = JOptionPane.showOptionDialog(null, panel, "Elevated Privileges Required", JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+		if(option == 0)
+		{
+			char[] enteredPassword = password.getPassword();
+			String passwordString = new String(enteredPassword);
+			if(passwordString.equals("worms"))
+			{
+				
+				return true;
+				
+			}
+			else 
+			{
+				
+				return false;
+			}
+		}
+		
+		
+		return false;
 	}
 }
 

@@ -39,7 +39,7 @@ public abstract class Employee
     {
         this.salary = salary;
     }
-    public void addToWorkSchedule(int schedule)
+    public void setWorkSchedule(int schedule)
     {
         workSchedule.add(schedule);
     }
@@ -47,7 +47,7 @@ public abstract class Employee
     {
         return workSchedule;
     }
-    public void addToAppointmentSchedule(int schedule)
+    public void setAppointmentSchedule(int schedule)
     {
         appointmentSchedule.add(schedule);
     }

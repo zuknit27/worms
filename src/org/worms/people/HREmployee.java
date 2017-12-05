@@ -37,7 +37,7 @@ public class HREmployee  extends Employee{
     
     public void hire(SalesEmployee e, Department department, double salary){
         e.setSalary(salary);
-        e.setDepartment(department);
+        //e.setDepartment(department);
         department.setSalesEmployeeList(e);
     	
         

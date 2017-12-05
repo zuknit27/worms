@@ -21,12 +21,23 @@ public class Driver2 {
 		//create a new departments
 		Department dept1 = new Department();
 		dept1.setName("Worm Sales");
+		
 		//add the department to the store
 		store.setDepartment(dept1);
 		
 		Department dept2 = new Department();
 		dept2.setName("Human Resources");
 		store.setDepartment(dept2);
+		
+		Department dept3 = new Department();
+		dept3.setName("Fishing pole sales");
+		store.setDepartment(dept3);
+		
+		Manager mang2 = new Manager();
+		mang2.setName("Walker");
+		
+		mang2.setSalary(1);
+		mang2.setDepartment(dept3);
 		
 		//create a manager
 		Manager mang1 = new Manager();
@@ -57,9 +68,21 @@ public class Driver2 {
 		SalesEmployee sales2 = new SalesEmployee();
 		SalesEmployee sales3 = new SalesEmployee();
 		
+		SalesEmployee sales4 = new SalesEmployee();
+		SalesEmployee sales5 = new SalesEmployee();
+		SalesEmployee sales6 = new SalesEmployee();
+		
 		sales1.setName("Tom");
 		sales2.setName("Bob");
 		sales3.setName("Jon");
+		
+		sales4.setName("Steve");
+		sales5.setName("Cory");
+		sales6.setName("Colin");
+		
+		sales4.setSalary(300);
+		sales5.setSalary(300);
+		sales6.setSalary(300);
 		
 		sales1.setSalary(300);
 		sales2.setSalary(300);
@@ -95,6 +118,10 @@ public class Driver2 {
 		sales1.setDepartment(dept1);
 		sales2.setDepartment(dept1);
 		sales3.setDepartment(dept1);
+		
+		sales4.setDepartment(dept3);
+		sales5.setDepartment(dept3);
+		sales6.setDepartment(dept3);
 		
 		//create some tasks
 		Task task1 = new Task();

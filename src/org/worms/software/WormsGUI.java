@@ -39,6 +39,7 @@ public class WormsGUI extends JFrame
 //////////employee menu items//////////
 	private JMenuItem EmployeePrintSchedule;
 	private JMenuItem EmployeeViewTasks;
+	private JMenuItem EmployeeCompleteTask;
 	
 //////////manager menu items//////////
 	private JMenuItem ManagerPrintSchedule;
@@ -64,6 +65,7 @@ public class WormsGUI extends JFrame
 	private JTextField managerEmpNameText;
 	private JTextField managerTaskText;
 	private JTextField taskNumberText;
+	private JTextField employeeNameText;
 	
 //////////frames//////////
 	private JFrame printScheduleFrame;
@@ -87,6 +89,7 @@ public class WormsGUI extends JFrame
 	private JFrame managerAssignTaskFrame;
 	private JFrame managerRemoveTaskFrame;
 	private JFrame taskListFrame;
+	private JFrame employeeCompleteTaskFrame;
 
 	//////////text areas//////////
 	private JTextArea wormsText;
@@ -111,7 +114,7 @@ public class WormsGUI extends JFrame
 		//setSize(500, 300);
 		setPreferredSize(new Dimension(400,300));
 		wormsText = new JTextArea("     Welcome to I've Got Worms.");
-		BufferedImage image = ImageIO.read(new File("/Users/Walker/Desktop/earthWormJim.jpg"));
+		BufferedImage image = ImageIO.read(new File("./earthWormJim.jpg"));
 		JLabel imageLabel = new JLabel(new ImageIcon(image));
 		
 		setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -142,6 +145,7 @@ public class WormsGUI extends JFrame
 		
 		EmployeePrintSchedule = new JMenuItem("Print Schedule");
 		EmployeeViewTasks = new JMenuItem("View Tasks");
+		EmployeeCompleteTask = new JMenuItem("Complete Task");
 		
 		ManagerPrintSchedule = new JMenuItem("Print Schedule");
 		ManagerPrintEmployeeList = new JMenuItem("Print Employee List");
@@ -159,6 +163,7 @@ public class WormsGUI extends JFrame
 		
 		EmployeePrintSchedule.addActionListener(new MenuListener());
 		EmployeeViewTasks.addActionListener(new MenuListener());
+		EmployeeCompleteTask.addActionListener(new MenuListener());
 		
 		ManagerPrintSchedule.addActionListener(new MenuListener());
 		ManagerPrintEmployeeList.addActionListener(new MenuListener());
@@ -174,6 +179,7 @@ public class WormsGUI extends JFrame
 		
 		EmployeeMenu.add(EmployeePrintSchedule);
 		EmployeeMenu.add(EmployeeViewTasks);
+		EmployeeMenu.add(EmployeeCompleteTask);
 		
 		ManagerMenu.add(ManagerPrintSchedule);
 		ManagerMenu.add(ManagerPrintEmployeeList);
@@ -221,6 +227,10 @@ public class WormsGUI extends JFrame
 			else if(source.equals(EmployeeViewTasks))
 			{
 				handleEmployeeViewTasks();
+			}
+			else if(source.equals(EmployeeCompleteTask))
+			{
+				handleEmployeeCompleteTask();
 			}
 			else if(source.equals(ManagerPrintSchedule))
 			{
@@ -450,6 +460,29 @@ public class WormsGUI extends JFrame
 		printScheduleFrame.setVisible(true);
 		printScheduleFrame.pack();
 	}
+	private void handleEmployeeCompleteTask()
+	{
+		employeeCompleteTaskFrame = new JFrame("Mark a task complete");
+		employeeCompleteTaskFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JPanel panel = new JPanel(new FlowLayout());
+		JLabel messageLabel = new JLabel("Employee Name:");
+		employeeNameText = new JTextField(15);
+		JButton completeTaskOKButton = new JButton("OK");
+		JButton completeTaskCancelButton = new JButton("Cancel");
+		
+		completeTaskOKButton.addActionListener(new completeTaskOKButtonListener());
+		completeTaskCancelButton.addActionListener(new completeTaskCancelButtonListener());
+		
+		panel.add(messageLabel);
+		panel.add(employeeNameText);
+		panel.add(completeTaskOKButton);
+		panel.add(completeTaskCancelButton);
+		
+		employeeCompleteTaskFrame.add(panel);
+		employeeCompleteTaskFrame.setVisible(true);
+		employeeCompleteTaskFrame.pack();
+		
+	}
 	private void handleManagerPrintSchedule()
 	{
 		printManagerScheduleFrame = new JFrame("Print Manager's Schedule");
@@ -501,13 +534,13 @@ public class WormsGUI extends JFrame
 	private void handleManagerAssignTask()
 	{
 		managerAssignTaskFrame = new JFrame("Assign Task to Sales Employee");
-		managerAssignTaskFrame.setPreferredSize(new Dimension(300,300));
+		//managerAssignTaskFrame.setPreferredSize(new Dimension(300,300));
 		managerAssignTaskFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel panel = new JPanel(new FlowLayout());
 		JLabel messageLabel = new JLabel("Employee:");
 		managerEmpNameText = new JTextField(15);
 		JLabel messageLabel2 = new JLabel("Task to Assign:");
-		managerTaskText = new JTextField(50);
+		managerTaskText = new JTextField(20);
 		JLabel messageLabel3 = new JLabel("Manager:");
 		managerNameText = new JTextField(15);
 		JButton managerAssignTaskOKButton = new JButton("Assign");
@@ -673,8 +706,15 @@ public class WormsGUI extends JFrame
 			}
 			if(isEmployee)
 			{
-				
-				printEmployeeTasks(store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex));
+				if(store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex).getTaskList().size() == 0)
+				{
+					JOptionPane.showMessageDialog(employeeErrorFrame, "Employee \"" + str + "\" doesn't have any tasks assigned", "Error finding tasks", 0);
+					return;
+				}
+				else
+				{
+					printEmployeeTasks(store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex));
+				}
 			}
 			//System.out.println(str);
 			else 
@@ -901,7 +941,7 @@ public class WormsGUI extends JFrame
 				if(isValidPassword)
 				{
 					employeeListFrame = new JFrame("Print List of Employees");
-					employeeListFrame.setPreferredSize(new Dimension(400,400));
+					employeeListFrame.setPreferredSize(new Dimension(200,200));
 					employeeListFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					JPanel panel = new JPanel(new FlowLayout());
 					managerEmployeeListText = new JTextArea();
@@ -1290,6 +1330,96 @@ public class WormsGUI extends JFrame
 	
 	
 	
+	private class completeTaskOKButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			String employeeName;
+			employeeName = employeeNameText.getText();
+			int employeeIndex = getSalesEmployeeIndex(employeeName);
+			int departmentIndex = getDepartmentIndexSales(employeeName);
+			if(employeeIndex == -1)
+			{
+				JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Employee doesn't exist", "Sales Employee not found", 0);
+				return;
+			}
+			else
+			{
+				int taskCount;
+				taskListFrame = new JFrame("List of Task for Employee");
+				taskListFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				JPanel panel = new JPanel(new FlowLayout());
+				taskListText = new JTextArea();
+				taskListText.append("Tasks for " + store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex).getName() + ":\n");
+				for(int i = 0; i < store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex).getTaskList().size(); i++)
+				{
+					taskCount = i+1;
+					taskListText.append(taskCount + ".  " +
+							store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex).getTaskList().get(i).getName() + "\n");
+				}
+				
+				JLabel messageLabel = new JLabel("Enter Task Number to Mark Complete:");
+				taskNumberText = new JTextField(5);
+				//enter task number here
+				JButton taskListCompleteOKButton = new JButton("OK");
+				JButton taskListCompleteCancelButton = new JButton("Cancel");
+				
+				taskListCompleteOKButton.addActionListener(new taskListCompleteOKButtonListener());
+				taskListCompleteCancelButton.addActionListener(new taskListCompleteCancelButtonListener());
+				
+				panel.add(taskListText);
+				panel.add(messageLabel);
+				panel.add(taskNumberText);
+				panel.add(taskListCompleteOKButton);
+				panel.add(taskListCompleteCancelButton);
+				
+				taskListFrame.add(panel);
+				taskListFrame.setVisible(true);
+				taskListFrame.pack();
+			}
+			
+		}
+	}
+	private class completeTaskCancelButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			employeeCompleteTaskFrame.setVisible(false);
+		}
+	}
+	private class taskListCompleteOKButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			String managerNameString, employeeNameString, taskNumberString;
+			managerNameString = managerNameText.getText();
+			employeeNameString = managerEmpNameText.getText();
+			taskNumberString = taskNumberText.getText();
+			if(taskNumberString.isEmpty())
+			{
+				JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Choose a task to complete", "Task number not entered", 0);
+				return;
+			}
+			int index = Integer.parseInt(taskNumberString);
+			index--;
+			int departmentIndex = getDepartmentIndexManager(managerNameString);
+			int employeeIndex = getSalesEmployeeIndex(employeeNameString);
+			store.getDepartmentList().get(departmentIndex).getSalesEmployeeList().get(employeeIndex).getTaskList().get(index).setCompleted(true);
+			JOptionPane.showMessageDialog(hrPayRateErrorFrame, "Task Completed Successfully", "Task Completed", 1);
+			return;
+			
+			
+			
+		}
+	}
+	private class taskListCompleteCancelButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			taskListFrame.setVisible(false);
+		}
+	}
+	
 	private boolean createPasswordFrame()
 	{
 		
@@ -1312,7 +1442,8 @@ public class WormsGUI extends JFrame
 			}
 			else 
 			{
-				
+				JOptionPane.showMessageDialog(employeeErrorFrame, "Invalid password", "Elevated Privileges Required", 0);
+							
 				return false;
 			}
 		}

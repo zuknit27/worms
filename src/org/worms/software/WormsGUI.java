@@ -111,7 +111,7 @@ public class WormsGUI extends JFrame
 		//setSize(500, 300);
 		setPreferredSize(new Dimension(400,300));
 		wormsText = new JTextArea("     Welcome to I've Got Worms.");
-		BufferedImage image = ImageIO.read(new File("./earthWormJim.jpg"));
+		BufferedImage image = ImageIO.read(new File("/Users/Walker/Desktop/earthWormJim.jpg"));
 		JLabel imageLabel = new JLabel(new ImageIcon(image));
 		
 		setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -983,14 +983,14 @@ public class WormsGUI extends JFrame
 		scheduleText.append("Work Schedule:\n");
 		for(int i = 0; i < employee.getWorkSchedule().size(); i++)
 		{
-			scheduleText.append(Store.scheduleToString(employee.getWorkSchedule().get(i)));
+			scheduleText.append(employee.convertTime(employee.getWorkSchedule().get(i)));//Store.scheduleToString(employee.getWorkSchedule().get(i)));
 			scheduleText.append("\n");
 			
 		}
 		scheduleText.append("\n\nAppointment Schedule:\n");
 		for(int j = 0; j < employee.getAppointmentSchedule().size(); j++)
 		{
-			scheduleText.append(Store.scheduleToString(employee.getAppointmentSchedule().get(j)));
+			scheduleText.append(employee.convertTime(employee.getAppointmentSchedule().get(j)));
 			scheduleText.append("\n");
 		}
 		JButton scheduleOKButton = new JButton("OK");
@@ -1018,14 +1018,14 @@ public class WormsGUI extends JFrame
 		managerScheduleText.append("Work Schedule:\n");
 		for(int i = 0; i < manager.getWorkSchedule().size(); i++)
 		{
-			managerScheduleText.append(Store.scheduleToString(manager.getWorkSchedule().get(i)));
+			managerScheduleText.append(manager.convertTime(manager.getWorkSchedule().get(i)));
 			managerScheduleText.append("\n");
-			
+			//manager.convertTime(manager.getWorkSchedule().get(i));
 		}
 		managerScheduleText.append("\n\nAppointment Schedule:\n");
 		for(int j = 0; j < manager.getAppointmentSchedule().size(); j++)
 		{
-			managerScheduleText.append(Store.scheduleToString(manager.getAppointmentSchedule().get(j)));
+			managerScheduleText.append(manager.convertTime(manager.getAppointmentSchedule().get(j)));
 			managerScheduleText.append("\n");
 		}
 		JButton managerScheduleOKButton = new JButton("OK");

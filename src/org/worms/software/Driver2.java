@@ -34,13 +34,13 @@ public class Driver2 {
 		mang1.setSalary(500);
 		mang1.setDepartment(dept1);
 		
-		mang1.setWorkSchedule(100);
-		mang1.setWorkSchedule(200);
-		mang1.setWorkSchedule(300);
-		mang1.setWorkSchedule(400);
-		mang1.setWorkSchedule(500);
-		mang1.setWorkSchedule(600);
-		mang1.setWorkSchedule(700);
+		mang1.setWorkSchedule(101);
+		mang1.setWorkSchedule(201);
+		mang1.setWorkSchedule(301);
+		mang1.setWorkSchedule(401);
+		mang1.setWorkSchedule(501);
+		mang1.setWorkSchedule(601);
+		mang1.setWorkSchedule(701);
 		
 		mang1.setAppointmentSchedule(110);
 		
@@ -66,20 +66,20 @@ public class Driver2 {
 		sales3.setSalary(300);
 		
 		//Set schedules
-        sales1.setWorkSchedule(100);
-        sales1.setWorkSchedule(200);
-        sales1.setWorkSchedule(300);
-        sales1.setWorkSchedule(400);
-        sales1.setWorkSchedule(500);
+        sales1.setWorkSchedule(101);
+        sales1.setWorkSchedule(201);
+        sales1.setWorkSchedule(301);
+        sales1.setWorkSchedule(401);
+        sales1.setWorkSchedule(501);
         
-        sales2.setWorkSchedule(124);
-        sales2.setWorkSchedule(324);
-        sales2.setWorkSchedule(524);
+        sales2.setWorkSchedule(102);
+        sales2.setWorkSchedule(302);
+        sales2.setWorkSchedule(502);
         
-        sales3.setWorkSchedule(148);
-        sales3.setWorkSchedule(248);
-        sales3.setWorkSchedule(448);
-        sales3.setWorkSchedule(548);
+        sales3.setWorkSchedule(103);
+        sales3.setWorkSchedule(203);
+        sales3.setWorkSchedule(403);
+        sales3.setWorkSchedule(503);
 		
 		//Set positions
         sales1.setPosition("Cashier");

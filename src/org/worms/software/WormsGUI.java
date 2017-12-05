@@ -938,6 +938,8 @@ public class WormsGUI extends JFrame
 		}
 	}
 	
+	
+
 	private void printEmployeeTasks(Employee employee)
 	{
 		taskFrame = new JFrame("Print Employee Tasks");
@@ -968,6 +970,8 @@ public class WormsGUI extends JFrame
 		taskFrame.setVisible(true);
 		taskFrame.pack();
 	}
+	
+	
 	private void printEmployeeSchedule(Employee employee)
 	{
 		scheduleFrame = new JFrame("Print Employee Schedule");

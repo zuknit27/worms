@@ -68,7 +68,7 @@ public class Driver
         hr1.setDepartment(dept1);
         
         //add hr employee to hr employee list of the store
-        store.setHREmployeeList(hr1);
+       // store.setHREmployeeList(hr1);
         
         
         //add sales employee to sales employee list of the store

@@ -40,6 +40,7 @@ public class WormsGUI extends JFrame
 	private JMenuItem EmployeePrintSchedule;
 	private JMenuItem EmployeeViewTasks;
 	private JMenuItem EmployeeCompleteTask;
+	private JMenuItem EmployeeMakeSale;
 	
 //////////manager menu items//////////
 	private JMenuItem ManagerPrintSchedule;
@@ -66,6 +67,8 @@ public class WormsGUI extends JFrame
 	private JTextField managerTaskText;
 	private JTextField taskNumberText;
 	private JTextField employeeNameText;
+	private JTextField productNameText;
+	private JTextField productQuantityText;
 	
 //////////frames//////////
 	private JFrame printScheduleFrame;
@@ -90,6 +93,7 @@ public class WormsGUI extends JFrame
 	private JFrame managerRemoveTaskFrame;
 	private JFrame taskListFrame;
 	private JFrame employeeCompleteTaskFrame;
+	private JFrame employeeMakeSaleFrame;
 
 	//////////text areas//////////
 	private JTextArea wormsText;
@@ -146,6 +150,7 @@ public class WormsGUI extends JFrame
 		EmployeePrintSchedule = new JMenuItem("Print Schedule");
 		EmployeeViewTasks = new JMenuItem("View Tasks");
 		EmployeeCompleteTask = new JMenuItem("Complete Task");
+		EmployeeMakeSale = new JMenuItem("Make Sale");
 		
 		ManagerPrintSchedule = new JMenuItem("Print Schedule");
 		ManagerPrintEmployeeList = new JMenuItem("Print Employee List");
@@ -164,6 +169,7 @@ public class WormsGUI extends JFrame
 		EmployeePrintSchedule.addActionListener(new MenuListener());
 		EmployeeViewTasks.addActionListener(new MenuListener());
 		EmployeeCompleteTask.addActionListener(new MenuListener());
+		EmployeeMakeSale.addActionListener(new MenuListener());
 		
 		ManagerPrintSchedule.addActionListener(new MenuListener());
 		ManagerPrintEmployeeList.addActionListener(new MenuListener());
@@ -180,6 +186,7 @@ public class WormsGUI extends JFrame
 		EmployeeMenu.add(EmployeePrintSchedule);
 		EmployeeMenu.add(EmployeeViewTasks);
 		EmployeeMenu.add(EmployeeCompleteTask);
+		EmployeeMenu.add(EmployeeMakeSale);
 		
 		ManagerMenu.add(ManagerPrintSchedule);
 		ManagerMenu.add(ManagerPrintEmployeeList);
@@ -231,6 +238,10 @@ public class WormsGUI extends JFrame
 			else if(source.equals(EmployeeCompleteTask))
 			{
 				handleEmployeeCompleteTask();
+			}
+			else if(source.equals(EmployeeMakeSale))
+			{
+				handleEmployeeMakeSale();
 			}
 			else if(source.equals(ManagerPrintSchedule))
 			{
@@ -591,8 +602,87 @@ public class WormsGUI extends JFrame
 		managerRemoveTaskFrame.setVisible(true);
 		managerRemoveTaskFrame.pack();
 	}
-	
+	private void handleEmployeeMakeSale()
+	{
+		employeeMakeSaleFrame = new JFrame("Make a sale");
+		employeeMakeSaleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JPanel panel = new JPanel(new FlowLayout());
+		JLabel messageLabel = new JLabel("Product Name:");
+		productNameText = new JTextField(15);
+		JLabel messageLabel2 = new JLabel("Quantity:");
+		productQuantityText = new JTextField(5);
+		JButton makeSaleOKButton = new JButton("OK");
+		JButton makeSaleCancelButton = new JButton("Cancel");
 		
+		makeSaleOKButton.addActionListener(new makeSaleOKButtonListener());
+		makeSaleCancelButton.addActionListener(new makeSaleCancelButtonListener());
+		
+		panel.add(messageLabel);
+		panel.add(productNameText);
+		panel.add(messageLabel2);
+		panel.add(productQuantityText);
+		panel.add(makeSaleOKButton);
+		panel.add(makeSaleCancelButton);
+		
+		employeeMakeSaleFrame.add(panel);
+		employeeMakeSaleFrame.setVisible(true);
+		employeeMakeSaleFrame.pack();
+	}
+	
+	private class makeSaleOKButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			String productNameString, productQuantityString;
+			boolean isProduct = false;
+			int productIndex = -1;
+			int productQuantityInt = 0;
+			int inventory = 0;
+			productNameString = productNameText.getText();
+			productQuantityString = productQuantityText.getText();
+			
+			if(productNameString.isEmpty())
+			{
+				JOptionPane.showMessageDialog(employeeErrorFrame, "Enter a product name", "Error finding Product", 0);
+				return;
+			}
+			if(productQuantityString.isEmpty())
+			{
+				JOptionPane.showMessageDialog(employeeErrorFrame, "Enter a quantity", "Error finding quantity", 0);
+				return;
+			}
+			productQuantityInt = Integer.parseInt(productQuantityString);
+			for(int i = 0; i < store.getDepartmentList().size(); i++)
+			{
+				for(int j = 0; j < store.getDepartmentList().get(i).getProductList().size(); j++)
+				{
+					if(store.getDepartmentList().get(i).getProductList().get(j).getName().equals(productNameString))
+					{
+						inventory = store.getDepartmentList().get(i).getProductList().get(j).getInventory();
+						inventory = inventory - productQuantityInt;
+						store.getDepartmentList().get(i).getProductList().get(j).setInventory(inventory);
+						if(inventory < 0)
+						{
+							JOptionPane.showMessageDialog(employeeErrorFrame, "Inventory for " + productNameString + " is " + inventory + " fix your inventory!", "Inventory negative", 0);
+							return;
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(employeeErrorFrame, "Updated inventory for " + productNameString + " is " + inventory, "Inventory Changed", 1);
+							return;
+						}
+					}
+				}
+			}
+		}
+	}
+	private class makeSaleCancelButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			employeeMakeSaleFrame.setVisible(false);
+		}
+	}
 	private class scheduleOKButtonListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e)
@@ -607,8 +697,8 @@ public class WormsGUI extends JFrame
 			String str;
 			
 			boolean isEmployee = false;
-			int index = 0;
-			int departmentIndex = 0;
+			int index = -1;
+			int departmentIndex = -1;
 			
 			str = printScheduleManagerNameText.getText();
 			for(int i = 0; i < store.getDepartmentList().size(); i++)

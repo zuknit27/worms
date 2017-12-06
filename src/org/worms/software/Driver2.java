@@ -121,8 +121,7 @@ public class Driver2 {
 		
 		sales4.setDepartment(dept3);
 		sales5.setDepartment(dept3);
-		sales6.setDepartment(dept3);
-		
+		sales6.setDepartment(dept3);		
 		//create some tasks
 		Task task1 = new Task();
 		Task task2 = new Task();
@@ -145,6 +144,9 @@ public class Driver2 {
 		prod2.setName("Fishing Poles");
 		prod2.setInventory(25);
 		prod2.setPrice(25);
+		
+		dept1.setProductList(prod1);
+		dept3.setProductList(prod2);
 		
 		WormsGUI newGUI;
 		newGUI = new WormsGUI("I've Got Worms", store);
